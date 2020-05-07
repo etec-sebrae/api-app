@@ -27,10 +27,7 @@ public class CursoController {
 	@RequestMapping("/listarcursos")
 	public List<Curso> listarCursos(){		
 		log.info("listando todos cursos da base de dados");
-		List<Curso> cursos = repository.findAll();		
-		for (Curso curso : cursos) {
-			log.debug("Curso: " ,curso.toString());
-		}		
+		List<Curso> cursos = repository.findAll();				
 		return cursos;		
 	}
 	
