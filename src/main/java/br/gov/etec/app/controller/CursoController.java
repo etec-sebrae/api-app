@@ -42,8 +42,8 @@ public class CursoController {
 		
 	//Mapping
 	private Curso toDtoEntity(CursoDto dto) {
-		log.info("Cadastro do ", dto.toString());
-		log.debug("Cadastro do ", dto.toString());
+		log.info("LOG INFO", dto.toString());
+		log.debug("LOG DEBUG", dto.toString());
 		Curso curso = new Curso();
 		curso.setNome(dto.getNome());
 		curso.setDescricao(dto.getDescricao());
