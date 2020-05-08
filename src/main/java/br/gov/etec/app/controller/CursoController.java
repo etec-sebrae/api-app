@@ -44,6 +44,7 @@ public class CursoController {
 	private Curso toDtoEntity(CursoDto dto) {
 		log.info("LOG INFO", dto.toString());
 		log.debug("LOG DEBUG", dto.toString());
+		
 		Curso curso = new Curso();
 		curso.setNome(dto.getNome());
 		curso.setDescricao(dto.getDescricao());
