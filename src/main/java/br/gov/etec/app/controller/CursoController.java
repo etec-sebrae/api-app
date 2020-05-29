@@ -17,6 +17,7 @@ import br.gov.etec.app.repository.CursoRepository;
 
 
 @RestController
+@RequestMapping("/curso")
 public class CursoController {
 	
 	@Autowired
@@ -24,7 +25,7 @@ public class CursoController {
 	
 	private static final Logger log = LoggerFactory.getLogger(CursoController.class);
 	
-	@RequestMapping("/listarcursos")
+	@RequestMapping("/listar")
 	public List<Curso> listarCursos(){		
 		log.info("listando todos cursos da base de dados");
 		List<Curso> cursos = repository.findAll();		
