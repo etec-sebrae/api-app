@@ -6,6 +6,8 @@ import br.gov.etec.app.entity.Aluno;
 
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 	
+	Aluno findById(long id);
+	
 	Aluno findByEmailAndSenha(String email, String senha);
 	
 
