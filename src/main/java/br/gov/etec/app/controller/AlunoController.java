@@ -23,6 +23,7 @@ public class AlunoController {
 	
 	@GetMapping("/listar")
 	public List<Aluno> listaAlunos(){
+		//teste
 		return repository.findAll();
 	}
 	
