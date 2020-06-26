@@ -1,4 +1,4 @@
-package br.gov.etec.app.service;
+package br.gov.etec.app.services;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -10,43 +10,42 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
-import br.gov.etec.app.dtos.DocumentoDto;
-import br.gov.etec.app.entity.Documento;
-import br.gov.etec.app.repository.DocumentoRepository;
+import br.gov.etec.app.dtos.EventoDto;
+import br.gov.etec.app.entity.Evento;
+import br.gov.etec.app.repository.EventoRepository;
 import br.gov.etec.app.response.Response;
 
 @Service
-public class DocumentoService {
-	@Autowired 
-	private DocumentoRepository repository;
+public class EventoService {
+
+	@Autowired
+	private EventoRepository repository;
 	
-	public ResponseEntity<Response<List<Documento>>> listar() {
-		Response<List<Documento>> response = new Response<>();
-		List<Documento> documentos =  repository.findAll();
-		
-		repository.findAll();
-		
-		response.setData(documentos);		
-		return ResponseEntity.ok(response);			
+	public ResponseEntity<Response<List<Evento>>> consultar() {
+		List<Evento> eventos = repository.findAll();
+		Response<List<Evento>> response = new Response<>();
+		response.setData(eventos);
+		repository.flush();
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 	
 	
-	public ResponseEntity<Response<Documento>> cadastrar(DocumentoDto documentoDto, BindingResult result) {
-		if(result.hasErrors()) {
+	public ResponseEntity<Response<Evento>> cadastrar(EventoDto dto,BindingResult result) {
+		if(result.hasErrors()) {							
 			return errorResponse(result);
 		}
 		
-		Response<Documento> response = new Response<>();
-		Documento documento = repository.save(documentoDto.tranformarDocumentoDto());
+		Evento evento = repository.save(dto.tranformaEventoDto());
+		Response<Evento> response = new Response<>();
+		response.setData(evento);
 		
-		response.setData(documento);		
+		repository.flush();
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
-		
 	}
 	
-	private ResponseEntity<Response<Documento>> errorResponse(BindingResult result) {
+	private ResponseEntity<Response<Evento>> errorResponse(BindingResult result) {
 		
-		Response<Documento> response = new Response<>();
+		Response<Evento> response = new Response<>();
 		
 		for (int i = 0; i < result.getErrorCount(); i++) {
 			LinkedHashMap<String, Object> al = new LinkedHashMap<>();
@@ -60,4 +59,7 @@ public class DocumentoService {
 		
 		return ResponseEntity.badRequest().body(response);
 	}
+	
+	
+	
 }

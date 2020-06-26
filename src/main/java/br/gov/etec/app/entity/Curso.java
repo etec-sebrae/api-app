@@ -1,5 +1,6 @@
 package br.gov.etec.app.entity;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,45 +13,44 @@ import javax.persistence.Table;
 public class Curso {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id_curso", nullable = false)
-	private Long id;
-	
-	@Column(name = "nome", nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	@Column(name = "nome",nullable = false, length = 55, unique = true)
 	private String nome;
-	
-	@Column(name = "descricao", nullable = false)
+	@Column(name = "descricao", nullable = false, length = 255)
 	private String descricao;
+		
 	
+	public Curso() {
+		
+	}
 
-	public Long getId() {
+	public Curso(String nome, String descricao) {
+		super();
+		this.nome = nome;
+		this.descricao = descricao;
+	}
+		
+	
+	public long getId() {
 		return id;
 	}
-
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-
+	
 	public String getNome() {
 		return nome;
 	}
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	
 	public String getDescricao() {
 		return descricao;
 	}
-
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-	@Override
-	public String toString() {
-		return "Curso [id=" + id + ", nome=" + nome + ", descricao=" + descricao + "]";
-	}
-	
 	
 }

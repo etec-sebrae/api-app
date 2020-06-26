@@ -26,7 +26,7 @@ public class Solicitacoes {
 	@JoinColumn(name = "documento_id",referencedColumnName = "id",nullable = false)
 	private Documento documento;
 	@ManyToOne
-	@JoinColumn(name = "alunoid",referencedColumnName = "id_aluno",nullable = false)
+	@JoinColumn(name = "aluno_id",referencedColumnName = "id",nullable = false)
 	private Aluno aluno;
 	
 	public Solicitacoes() {

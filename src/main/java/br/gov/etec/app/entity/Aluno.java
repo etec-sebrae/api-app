@@ -7,36 +7,52 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name="tb_aluno")
 public class Aluno {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY )
-	@Column(name = "id_aluno", nullable = false)
+	@GeneratedValue(strategy = GenerationType.AUTO )
 	private long id;
-	@Column
+	@Column(name = "nome", nullable = false,length = 50)
 	private String nome;
-	@Column
+	@Column(name = "rg", nullable = false, length = 12)
 	private String rg;
-	@Column
-	private String cpf;
-	@Column
-	private String email;
-	@Column
+	@Column(name = "cpf",nullable = false, length = 14,unique = true)
+	private String cpf;	
+	@Column(name = "matricula", unique = true, nullable = false, length = 12)
+	private long matricula;
+	@Column(name = "dt_nascimento", nullable = false)
 	private Date data_nasc;
-	@Column
-	private long id_curso;
-	@Column
-	private String senha;
+	@ManyToOne
+	@JoinColumn(name = "curso_id",referencedColumnName = "id",nullable = false)
+	private Curso curso;
+	@ManyToOne
+	@JoinColumn(name = "login_id",referencedColumnName = "id",nullable = false)
+	private Login login;
 		
 	
 	public Aluno() {
 		// TODO Auto-generated constructor stub
 	}
 		
+	public Aluno(String nome, String rg, String cpf,long matricula, Date data_nasc, Curso curso, Login login) {
+		super();
+		this.nome = nome;
+		this.rg = rg;
+		this.cpf = cpf;
+		this.matricula = matricula;
+		this.data_nasc = data_nasc;
+		this.curso = curso;
+		this.login = login;
+		
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -61,15 +77,7 @@ public class Aluno {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	
-
+		
 	public Date getData_nasc() {
 		return data_nasc;
 	}
@@ -77,20 +85,32 @@ public class Aluno {
 	public void setData_nasc(Date data_nasc) {
 		this.data_nasc = data_nasc;
 	}
-
-	public long getId_curso() {
-		return id_curso;
+	
+	public Curso getCurso() {
+		return curso;
 	}
 
-	public void setId_curso(long id_curso) {
-		this.id_curso = id_curso;
+
+	public void setCurso(Curso curso) {
+		this.curso = curso;
 	}
 
-	public String getSenha() {
-		return senha;
+
+	public Login getLogin() {
+		return login;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}	
+
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+
+	public long getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(long matricula) {
+		this.matricula = matricula;
+	}
+		
 }

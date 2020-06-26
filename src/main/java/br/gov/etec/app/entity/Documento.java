@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Documento {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	@Column(name = "tipo", nullable = false, length = 50)
 	private String tipo;

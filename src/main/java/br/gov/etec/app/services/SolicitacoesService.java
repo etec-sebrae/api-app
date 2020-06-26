@@ -1,4 +1,4 @@
-package br.gov.etec.app.service;
+package br.gov.etec.app.services;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.gov.etec.app.dtos.SolicitacoesDto;
 import br.gov.etec.app.entity.Solicitacoes;
 import br.gov.etec.app.response.Response;
-import br.gov.etec.app.service.SolicitacoesService;
+import br.gov.etec.app.services.SolicitacoesService;
 
 @RestController
 @RequestMapping("/api/solicitacoes")
