@@ -10,9 +10,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import br.gov.etec.app.entity.Aluno;
 import br.gov.etec.app.entity.Curso;
-import br.gov.etec.app.entity.Login;
+import br.gov.etec.app.entity.Pessoa;
+import br.gov.etec.app.entity.Usuario;
+import br.gov.etec.app.enuns.TipoEnum;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @SuppressWarnings("deprecation")
@@ -113,8 +114,8 @@ public class AlunoDto implements Serializable {
 	}
 
 
-	public Aluno transformaAlunoDto(Curso curso,Login login) {
-		return new Aluno(nome,rg,cpf,matricula,data_nasc,curso,login);
+	public Pessoa transformaAlunoDto(Usuario usuario) {
+		return new Pessoa(nome,matricula,rg,cpf,data_nasc,email,TipoEnum.ALUNO,usuario);
 	}
 	
 	

@@ -12,206 +12,82 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
-import br.gov.etec.app.authentication.PerfilEnum;
 import br.gov.etec.app.dtos.AlunoDto;
-import br.gov.etec.app.entity.Aluno;
+import br.gov.etec.app.entity.AlunoCurso;
 import br.gov.etec.app.entity.Curso;
-import br.gov.etec.app.entity.Login;
-import br.gov.etec.app.repository.AlunoRepository;
+import br.gov.etec.app.entity.Pessoa;
+import br.gov.etec.app.entity.Usuario;
+import br.gov.etec.app.enuns.PerfilEnum;
 import br.gov.etec.app.repository.CursoReposity;
+import br.gov.etec.app.repository.PessoaRepository;
 import br.gov.etec.app.response.Response;
 import br.gov.etec.app.security.senhaUtils;
 
 @Service
 public class AlunoService {
 	@Autowired
-	private AlunoRepository repository;
+	private PessoaRepository pessoaAlunoRepository;
+		
+	@Autowired
+	private CursoService cursoService;
+			
+	@Autowired
+	private UsuarioService usuarioService;	
 	
 	@Autowired
-	private CursoReposity repositoryCurso;
-	
-	@Autowired
-	LoginService loginService;	
+	private AlunoCursoService alunoCursoService;
 	
 	
 	
-	public ResponseEntity<Response<List<LinkedHashMap<String,Object>>>> listar(){
-		List<Aluno> aluno = new ArrayList<>();
-		aluno = repository.findAll();	
+	
+	public ResponseEntity<Response<List<Pessoa>>> listar(){
+		Response<List<Pessoa>> response = new Response<>();
 		
-		Response<List<LinkedHashMap<String,Object>>> response = new Response<>();
+		List<Pessoa> aluno = pessoaAlunoRepository.findAll();
+		pessoaAlunoRepository.flush();
 		
-		List<LinkedHashMap<String,Object>> listaAlunos = new  ArrayList<>();
+		response.setData(aluno);
 		
-		for (Aluno aluno2 : aluno) {
-			SimpleDateFormat d = new SimpleDateFormat();
-			LinkedHashMap<String, Object> al = new LinkedHashMap<>();
-			al.put("id", aluno2.getId());
-			al.put("nome", aluno2.getNome());
-			al.put("rg", aluno2.getRg());
-			al.put("cpf", aluno2.getCpf());
-			al.put("email", aluno2.getLogin().getEmail());
-			al.put("data_nasc", d.format(aluno2.getData_nasc()));
-			al.put("curso", aluno2.getCurso().getNome());
-			listaAlunos.add(al);					
-		}
-		
-		response.setData(listaAlunos);
-						
-		repository.flush();
 		return ResponseEntity.ok(response);
 	}
 
 	
-	public ResponseEntity<Response<LinkedHashMap<String, Object>>> cadastrar(AlunoDto alunoDto,BindingResult result){
+	public ResponseEntity<Response<AlunoCurso>> cadastrar(AlunoDto alunoDto,BindingResult result){
+		Response<AlunoCurso> response = new Response<>();
 		
 		if(result.hasErrors()) {
-			return errorResponse(result);			
+			return null;
 		}
-				
-		String senha = senhaUtils.gerarBCrypt(alunoDto.getSenha());
-		alunoDto.setSenha(senha);
 		
-		Curso curso = repositoryCurso.findById(alunoDto.getId_curso());
+		Usuario usuario = usuarioService.criarUsuarioAluno(alunoDto.getEmail(),alunoDto.getSenha());		
+		Pessoa aluno = pessoaAlunoRepository.save(alunoDto.transformaAlunoDto(usuario));
 		
-		PerfilEnum perfil = PerfilEnum.ROLE_USUARIO;
-		Login login = new Login();
-		login.setSenha(senha);
-		login.setEmail(alunoDto.getEmail());
-		login.setPerfil(perfil);
+		Curso curso = cursoService.buscarPorId(alunoDto.getId_curso());
 		
-		Login logi = loginService.save(login);
+		AlunoCurso alunoCurso = alunoCursoService.salvar(aluno,curso);
 		
-		
-		Aluno aluno = repository.save(alunoDto.transformaAlunoDto(curso,logi));
-		
-		LinkedHashMap<String, Object> map = new LinkedHashMap<>();
-		
-	
-		SimpleDateFormat d = new SimpleDateFormat();
-		
-		map.put("id",aluno.getId());
-		map.put("nome",aluno.getNome());
-		map.put("rg",aluno.getRg());
-		map.put("cpf",aluno.getCpf());
-		map.put("email",aluno.getLogin().getEmail());
-		map.put("data_nasc",d.format(aluno.getData_nasc()));
-		map.put("curso", aluno.getCurso().getNome());
-		
-		Response<LinkedHashMap<String, Object>> response = new Response<>();
-		response.setData(map);
-		
-		repository.flush();				
+		response.setData(alunoCurso);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 			
 	}
 	
 	
-	public ResponseEntity<Response<Aluno>> litarPorId(long id){
-		Response<Aluno> response = new Response<>();
-		
-		Aluno aluno = repository.findById(id);
-		
-		if(aluno == null) {
-			LinkedHashMap<String, Object> obErro = new LinkedHashMap<>();			
-			obErro.put("defaultMessage", "aluno não localizado");			
-			response.getErrors().add(obErro);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-		}
-		
-		response.setData(aluno);
-		
-		return ResponseEntity.ok(response);
+	public ResponseEntity<Response<Pessoa>> litarPorId(long id){
+		return null;
 	}
 	
 	
-	public ResponseEntity<Response<Aluno>> atualizar(long id, AlunoDto alunoDto){
-		Response<Aluno> response = new Response<>();
-		Aluno alunoData = repository.findById(id);
-		if(alunoData == null) {
-			LinkedHashMap<String, Object> al = new LinkedHashMap<>();
-			al.put("defaultMessage", "Aluno não localizado");
-			response.getErrors().add(al);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-		}
-		
-		if(alunoDto.getCpf() != null && alunoDto.getCpf() != "" ) {
-			alunoData.setCpf(alunoDto.getCpf());
-		}
-		
-		if(alunoDto.getData_nasc() != null) {
-			
-			alunoData.setData_nasc(alunoDto.getData_nasc());
-		}
-		
-		if(alunoDto.getEmail() != null) {
-			alunoData.getLogin().setEmail(alunoDto.getEmail());
-		}
-		
-		if(alunoDto.getId_curso() != 0L ){
-			Curso curso = repositoryCurso.findById(alunoDto.getId_curso());
-			alunoData.setCurso(curso);
-		}
-		
-		if(alunoDto.getNome()!= null) {
-			alunoData.setNome(alunoDto.getNome());
-		}
-		
-		if(alunoDto.getRg() != null) {
-			alunoData.setRg(alunoDto.getRg());
-		}
-		
-		if(alunoDto.getSenha() != null) {
-			String senha = senhaUtils.gerarBCrypt(alunoDto.getSenha());
-			alunoData.getLogin().setSenha(senha);
-		}
-		
-		if(alunoDto.getMatricula() != 0L) {
-			alunoData.setMatricula(alunoDto.getMatricula());
-		}
-		
-		
-		Aluno _aluno = repository.save(alunoData);
-		response.setData(_aluno);
-		return ResponseEntity.status(HttpStatus.OK).body(response);
+	public ResponseEntity<Response<Pessoa>> atualizar(long id, AlunoDto alunoDto){
+		return null;
 		
 	}
 	
 	 
-	public ResponseEntity<Response<Aluno>> deletar(long id) {
-		Response<Aluno> response = new Response<>();
-		Aluno aluno = repository.findById(id);
-		repository.flush();
-		
-		if(aluno == null) {
-			LinkedHashMap<String, Object> al = new LinkedHashMap<>();
-			al.put("defaultMessage", "aluno não localizado");
-			response.getErrors().add(al);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-		}
-		
-		repository.delete(aluno);
-		repository.flush();
-		response.setData(aluno);
-		return ResponseEntity.noContent().build();
+	public ResponseEntity<Response<Pessoa>> deletar(long id) {
+		return null;
 	}
 	
-	private ResponseEntity<Response<LinkedHashMap<String, Object>>> errorResponse(BindingResult result) {
-		
-		Response<LinkedHashMap<String, Object>> response = new Response<>();
-		
-		for (int i = 0; i < result.getErrorCount(); i++) {
-			LinkedHashMap<String, Object> al = new LinkedHashMap<>();
-			ObjectError erro = result.getFieldErrors().get(i);
-			al.put("defaultMessage", erro.getDefaultMessage());
-			al.put("field", result.getFieldErrors().get(i).getField());
-			al.put("objectName", erro.getObjectName());				
-			
-			response.getErrors().add(al);
-		}
-		
-		return ResponseEntity.badRequest().body(response);
-	}
+	
 	
 }

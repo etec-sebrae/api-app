@@ -13,11 +13,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
 import br.gov.etec.app.dtos.SolicitacoesDto;
-import br.gov.etec.app.entity.Aluno;
+import br.gov.etec.app.entity.Curso;
 import br.gov.etec.app.entity.Documento;
+import br.gov.etec.app.entity.Pessoa;
 import br.gov.etec.app.entity.Solicitacoes;
-import br.gov.etec.app.repository.AlunoRepository;
+import br.gov.etec.app.repository.CursoReposity;
 import br.gov.etec.app.repository.DocumentoRepository;
+import br.gov.etec.app.repository.PessoaRepository;
 import br.gov.etec.app.repository.SolicitacoesRepository;
 import br.gov.etec.app.response.Response;
 
@@ -28,7 +30,10 @@ public class SolicitacoesService {
 	private SolicitacoesRepository repositorySolicitacoes;
 	
 	@Autowired
-	private AlunoRepository alunoRepository;
+	private CursoReposity cursoRepository;
+	
+	@Autowired
+	private PessoaRepository pessoaRepository;
 	
 	@Autowired
 	private DocumentoRepository documentoRepository;
@@ -47,7 +52,7 @@ public class SolicitacoesService {
 			al.put("Aluno", solicitacoes2.getAluno().getNome());
 			al.put("Documento", solicitacoes2.getDocumento().getDescricao());
 			al.put("Status", solicitacoes2.getStatus());
-			al.put("Data", d.format(solicitacoes2.getData_solicitacao()));
+			al.put("Data", d.format(solicitacoes2.getData_abertura()));
 			listaSolicitacoes.add(al);	
 		}
 		
@@ -64,8 +69,8 @@ public class SolicitacoesService {
 			return errorResponse(result);
 		}
 		
-		Aluno aluno = alunoRepository.findById(dto.getId_aluno());
-		alunoRepository.flush();
+		Pessoa aluno = pessoaRepository.findById(dto.getId_aluno());
+		pessoaRepository.flush();
 		
 		if(aluno == null) {
 			Response<Solicitacoes> response = new Response<>();
@@ -86,9 +91,10 @@ public class SolicitacoesService {
 			return ResponseEntity.badRequest().body(response);
 		}
 		
+		Curso curso = cursoRepository.findById(dto.getId_curso()); 
 		
 		
-		Solicitacoes solicitacoes = repositorySolicitacoes.save(dto.transformaSolicitacoesDto(documento, aluno));
+		Solicitacoes solicitacoes = repositorySolicitacoes.save(dto.transformaSolicitacoesDto(documento, aluno,curso));
 		repositorySolicitacoes.findAll();
 		
 		Response<Solicitacoes> response = new Response<>();

@@ -11,94 +11,33 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
-import br.gov.etec.app.authentication.PerfilEnum;
 import br.gov.etec.app.dtos.FuncionarioDto;
-import br.gov.etec.app.entity.Funcionario;
-import br.gov.etec.app.entity.Login;
-import br.gov.etec.app.repository.FuncionarioRepository;
+import br.gov.etec.app.entity.Usuario;
+import br.gov.etec.app.enuns.PerfilEnum;
+import br.gov.etec.app.repository.PessoaRepository;
 import br.gov.etec.app.response.Response;
 import br.gov.etec.app.security.senhaUtils;
 
 @Service
 public class FuncionarioService {
 	@Autowired
-	private FuncionarioRepository repository;
+	private PessoaRepository pessoaFuncionarioRepository;
 	
 	@Autowired
-	LoginService loginService;
+	UsuarioService loginService;
 	
 	public ResponseEntity<Response<List<LinkedHashMap<String,Object>>>> listarOperadores(){
-		List<Funcionario> operador = new ArrayList<>();
-		operador = repository.findAll();
-		
-		Response<List<LinkedHashMap<String,Object>>> response = new Response<>();
-		
-		List<LinkedHashMap<String, Object>> listaOperadores = new ArrayList<>();
-				
-		for (Funcionario operador2 : operador) {
-			LinkedHashMap<String, Object> op = new LinkedHashMap<>();
-			op.put("id", operador2.getId());
-			op.put("nome", operador2.getNome());
-			op.put("email", operador2.getLogin().getEmail());
-			listaOperadores.add(op);
-		}
-		
-		response.setData(listaOperadores);
-		
-		repository.flush();
-		return ResponseEntity.ok(response);		
+		return null;	
 	}
 	
 	public ResponseEntity<Response<LinkedHashMap<String, Object>>> cadastraOperadores(FuncionarioDto funcionarioDto,  BindingResult result){
-		if(result.hasErrors()) {
-			return errorResponse(result);
-		}
-				
-		String senha = senhaUtils.gerarBCrypt(funcionarioDto.getSenha());
-		
-		funcionarioDto.setSenha(senha);
-		
-		PerfilEnum perfil = PerfilEnum.ROLE_USUARIO;
-		Login login = new Login();
-		login.setSenha(senha);
-		login.setEmail(funcionarioDto.getEmail());
-		login.setPerfil(perfil);
-		
-		Login loginSaved = loginService.save(login);
-		
-		Funcionario operador = repository.save(funcionarioDto.tranformaOperadorDto(loginSaved));
-		
-		//Criando resposta de return
-		LinkedHashMap<String, Object> map = new LinkedHashMap<>();		
-		map.put("id", operador.getId());
-		map.put("nome", operador.getNome());
-		map.put("email", operador.getLogin().getEmail());
-	
-		
-		Response<LinkedHashMap<String, Object>> response = new Response<>();
-		response.setData(map);
-		
-		repository.flush();
-				
-		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		return null;
 	}
 	
 	
 	private ResponseEntity<Response<LinkedHashMap<String, Object>>> errorResponse(BindingResult result) {
 		
-		Response<LinkedHashMap<String, Object>> response = new Response<>();
-		
-		for (int i = 0; i < result.getErrorCount(); i++) {
-			LinkedHashMap<String, Object> al = new LinkedHashMap<>();
-			ObjectError erro = result.getFieldErrors().get(i);
-			al.put("defaultMessage", erro.getDefaultMessage());
-			al.put("field", result.getFieldErrors().get(i).getField());
-			al.put("objectName", erro.getObjectName());				
-			
-			response.getErrors().add(al);
-		}
-		
-		return ResponseEntity.badRequest().body(response);
+		return null;
 	}
 
 }

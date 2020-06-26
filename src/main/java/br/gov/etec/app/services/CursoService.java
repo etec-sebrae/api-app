@@ -44,6 +44,9 @@ public class CursoService {
 	}
 	
 	
+
+	
+	
 	private ResponseEntity<Response<Curso>> errorResponse(BindingResult result) {
 		
 		Response<Curso> response = new Response<Curso>();
@@ -59,6 +62,10 @@ public class CursoService {
 		}
 		
 		return ResponseEntity.badRequest().body(response);
+	}
+
+	public Curso buscarPorId(long id) {		
+		return repository.findById(id);
 	}
 
 }
