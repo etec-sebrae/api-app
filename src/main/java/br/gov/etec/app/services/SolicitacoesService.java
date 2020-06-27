@@ -101,6 +101,28 @@ public class SolicitacoesService {
 		
 	}
 	
+	public ResponseEntity<Response<Solicitacoes>> atualizar(long id, SolicitacoesDto solicitacoesDto){
+		Response<Solicitacoes> response = new Response<>();
+		Solicitacoes solicitacoesData = repositorySolicitacoes.findById(id);
+				
+		if(solicitacoesData == null) {
+			LinkedHashMap<String, Object> al = new LinkedHashMap<>();
+			al.put("defaultMessage", "Solicitacao não localizado");
+			response.getErrors().add(al);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+		}
+		
+		if(solicitacoesDto.getStatus() != 0L) {
+			solicitacoesData.setStatus((int)solicitacoesDto.getStatus());
+		}
+		
+		Solicitacoes _solicitacoes = repositorySolicitacoes.save(solicitacoesData);
+		response.setData(_solicitacoes);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+		
+	}
+	
+	
 	private ResponseEntity<Response<Solicitacoes>> errorResponse(BindingResult result) {
 		
 		Response<Solicitacoes> response = new Response<>();

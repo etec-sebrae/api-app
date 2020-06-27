@@ -16,6 +16,8 @@ public class SolicitacoesDto {
 	private long id_aluno;
 	@NotNull
 	private long id_documento;
+	private long status;
+	@NotNull
 	
 	public SolicitacoesDto() {
 		
@@ -41,6 +43,14 @@ public class SolicitacoesDto {
 	public void setId_documento(long id_documento) {
 		this.id_documento = id_documento;
 	}
+
+	public long getStatus() {
+		return status;
+	}
+	public void setStatus(long status) {
+		this.status = status;
+	}
+
 	
 	public Solicitacoes transformaSolicitacoesDto(Documento documento, Aluno aluno){
 		return new Solicitacoes(1,new Date(),documento,aluno);
