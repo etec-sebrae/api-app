@@ -14,27 +14,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.gov.etec.app.dtos.SolicitacoesDto;
-import br.gov.etec.app.entity.Solicitacoes;
+import br.gov.etec.app.dtos.SolicitacaoDocumentoDto;
+import br.gov.etec.app.entity.SolicitacaoDocumento;
 import br.gov.etec.app.response.Response;
-import br.gov.etec.app.services.SolicitacoesService;
+import br.gov.etec.app.services.SolicitacaoDocumentoService;
 
 @RestController
 @RequestMapping("/api/solicitacoes")
-public class SolicitacoesController {
+public class SolicitacaoDocumentoController {
 	
 	@Autowired
-	private SolicitacoesService service;
+	private SolicitacaoDocumentoService service;
 	
 	@GetMapping
 	public ResponseEntity<Response<List<LinkedHashMap<String,Object>>>> listar(){
-		return service.litar();
+		List<SolicitacaoDocumento> solicitacoes = service.litar();
+		return null;
 	}
 	
 	
 	@PostMapping
-	public ResponseEntity<Response<Solicitacoes>> cadastro(@RequestBody @Valid SolicitacoesDto dto, BindingResult result ){
-		return service.cadastrar(dto, result);
+	public ResponseEntity<Response<SolicitacaoDocumento>> cadastro(@RequestBody @Valid SolicitacaoDocumentoDto dto, BindingResult result ){
+		SolicitacaoDocumento solicatacao = service.cadastrar(dto, result);
+		return null;
 	}
 
 }

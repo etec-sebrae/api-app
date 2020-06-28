@@ -7,8 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -30,18 +30,16 @@ public class Aluno {
 	@Column(name = "dt_nascimento", nullable = false)
 	private Date data_nasc;
 	@ManyToOne
-	@JoinColumn(name = "curso_id",referencedColumnName = "id",nullable = false)
 	private Curso curso;
-	@ManyToOne
-	@JoinColumn(name = "login_id",referencedColumnName = "id",nullable = false)
-	private Login login;
+	@OneToOne
+	private Usuario usuario;
 		
 	
 	public Aluno() {
 		// TODO Auto-generated constructor stub
 	}
 		
-	public Aluno(String nome, String rg, String cpf,long matricula, Date data_nasc, Curso curso, Login login) {
+	public Aluno(String nome, String rg, String cpf,long matricula, Date data_nasc, Curso curso, Usuario usuario) {
 		super();
 		this.nome = nome;
 		this.rg = rg;
@@ -49,7 +47,7 @@ public class Aluno {
 		this.matricula = matricula;
 		this.data_nasc = data_nasc;
 		this.curso = curso;
-		this.login = login;
+		this.usuario = usuario;
 		
 	}
 
@@ -96,13 +94,13 @@ public class Aluno {
 	}
 
 
-	public Login getLogin() {
-		return login;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
 
-	public void setLogin(Login login) {
-		this.login = login;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public long getMatricula() {

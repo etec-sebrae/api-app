@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import br.gov.etec.app.enuns.PerfilEnum;
 
 @Entity
-@Table(name = "tb_login")
+@Table(name = "tb_usuario")
 public class Usuario {
 	
 	@Id

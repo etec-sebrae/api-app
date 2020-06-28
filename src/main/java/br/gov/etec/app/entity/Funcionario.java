@@ -5,8 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,18 +17,17 @@ public class Funcionario {
 	private long id;
 	@Column(name = "nome", nullable = false, length = 50)
 	private String nome;
-	@ManyToOne
-	@JoinColumn(name = "login",referencedColumnName = "id",nullable = false)
-	private Login login;
+	@OneToOne
+	private Usuario usuario;
 	
 	public Funcionario() {
 		
 	}
 	
-	public Funcionario(String nome, Login login) {
+	public Funcionario(String nome, Usuario usuario) {
 		super();
 		this.nome = nome;
-		this.login = login;
+		this.usuario = usuario;
 	}
 
 	public long getId() {
@@ -48,13 +46,12 @@ public class Funcionario {
 		this.nome = nome;
 	}
 
-	public Login getLogin() {
-		return login;
+	public Usuario getUsuario(){
+		return usuario;
 	}
 
-	public void setLogin(Login login) {
-		this.login = login;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
-	
 	
 }

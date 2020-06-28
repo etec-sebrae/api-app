@@ -11,7 +11,7 @@ import br.gov.etec.app.entity.Documento;
 public class DocumentoDto {
 	
 	@NotBlank
-	private String tipo;
+	private String nome;
 	@NotBlank
 	private String descricao;
 		
@@ -21,18 +21,18 @@ public class DocumentoDto {
 	}
 
 
-	public DocumentoDto( String tipo,  String descricao) {
+	public DocumentoDto( String nome,  String descricao) {
 		super();
-		this.tipo = tipo;
+		this.nome = nome;
 		this.descricao = descricao;
 	}
 	
 	
-	public String getTipo() {
-		return tipo;
+	public String getNome() {
+		return nome;
 	}
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setNome(String tipo) {
+		this.nome = tipo;
 	}
 	public String getDescricao() {
 		return descricao;
@@ -42,7 +42,7 @@ public class DocumentoDto {
 	}
 	
 	public Documento tranformarDocumentoDto() {
-		return new Documento(tipo,descricao);
+		return new Documento(nome,descricao);
 	}
 
 }

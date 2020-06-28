@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.etec.app.dtos.FuncionarioDto;
+import br.gov.etec.app.entity.Funcionario;
+import br.gov.etec.app.entity.Pessoa;
 import br.gov.etec.app.response.Response;
 import br.gov.etec.app.services.FuncionarioService;
 
@@ -27,12 +29,14 @@ public class FuncionarioController {
 	
 	@GetMapping
 	public ResponseEntity<Response<List<LinkedHashMap<String,Object>>>> listarOperadores(){
-		return service.listarOperadores();
+		List<Pessoa> funcionarios = service.listar();
+		return null;
 	}
 	
 	@PostMapping
 	public ResponseEntity<Response<LinkedHashMap<String, Object>>> cadastroOperadores(@RequestBody @Valid FuncionarioDto funcionarioDto, BindingResult result){
-		return service.cadastraOperadores(funcionarioDto,result);
+		Pessoa funcionario = service.cadastrar(funcionarioDto,result);
+		return null;
 	}
 	
 

@@ -12,8 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_solicitacoes")
-public class Solicitacoes {
+@Table(name = "tb_solicitacao_documento")
+public class SolicitacaoDocumento {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,11 +34,11 @@ public class Solicitacoes {
 	@JoinColumn(name = "curso_id",referencedColumnName = "id",nullable = false)
 	private Curso curso;
 		
-	public Solicitacoes() {
+	public SolicitacaoDocumento() {
 	
 	}
 	
-	public Solicitacoes(int status, Date data_abertura, Documento documento, Pessoa aluno,
+	public SolicitacaoDocumento(int status, Date data_abertura, Documento documento, Pessoa aluno,
 			Curso curso) {
 		super();
 		this.status = status;

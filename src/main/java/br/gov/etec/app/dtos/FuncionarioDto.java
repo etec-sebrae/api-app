@@ -100,8 +100,8 @@ public class FuncionarioDto implements Serializable {
 		this.senha = senha;
 	}
 
-	public Pessoa tranformaFuncionarioDto(Usuario login) {
-		return new Pessoa(nome,matricula,rg,cpf,data_nasc,email,TipoEnum.FUNCIONARIO,login);
+	public Pessoa tranformaFuncionarioDto(Usuario usuario) {
+		return new Pessoa(nome,matricula,rg,cpf,data_nasc,email,TipoEnum.FUNCIONARIO,usuario);
 	}
 
 

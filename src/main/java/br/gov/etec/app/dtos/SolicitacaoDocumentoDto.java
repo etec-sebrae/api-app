@@ -7,10 +7,10 @@ import javax.validation.constraints.NotNull;
 import br.gov.etec.app.entity.Curso;
 import br.gov.etec.app.entity.Documento;
 import br.gov.etec.app.entity.Pessoa;
-import br.gov.etec.app.entity.Solicitacoes;
+import br.gov.etec.app.entity.SolicitacaoDocumento;
 
 
-public class SolicitacoesDto {
+public class SolicitacaoDocumentoDto {
 	
 	@NotNull
 	private long id_aluno;
@@ -19,12 +19,12 @@ public class SolicitacoesDto {
 	@NotNull
 	private long id_curso;
 	
-	public SolicitacoesDto() {
+	public SolicitacaoDocumentoDto() {
 		
 	}
 	
 	
-	public SolicitacoesDto(long id_aluno, long id_documento, long id_curso) {
+	public SolicitacaoDocumentoDto(long id_aluno, long id_documento, long id_curso) {
 		super();
 		this.id_aluno = id_aluno;
 		this.id_documento = id_documento;
@@ -54,8 +54,8 @@ public class SolicitacoesDto {
 	}
 
 
-	public Solicitacoes transformaSolicitacoesDto(Documento documento, Pessoa aluno,Curso curso){
-		return new Solicitacoes(1,new Date(),documento,aluno,curso);
+	public SolicitacaoDocumento transformaSolicitacoesDto(Documento documento, Pessoa aluno,Curso curso){
+		return new SolicitacaoDocumento(1,new Date(),documento,aluno,curso);
 	}
 
 }

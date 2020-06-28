@@ -1,9 +1,7 @@
 package br.gov.etec.app.controller;
 
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import br.gov.etec.app.dtos.EventoDto;
 import br.gov.etec.app.entity.Evento;
 import br.gov.etec.app.response.Response;
@@ -28,12 +25,14 @@ public class EventoController {
 	
 	@GetMapping
 	public ResponseEntity<Response<List<Evento>>> consultar(){
-		return service.consultar();
+		List<Evento> eventos = service.consultar();
+		return null;
 	}
 	
 	@PostMapping
 	public ResponseEntity<Response<Evento>> cadastrar(@RequestBody @Valid EventoDto dto,BindingResult result) {
-		return service.cadastrar(dto,result);
+		Evento evento = service.cadastrar(dto,result);
+		return null;
 	}
 	
 	

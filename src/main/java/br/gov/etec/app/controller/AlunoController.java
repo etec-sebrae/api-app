@@ -1,18 +1,13 @@
 package br.gov.etec.app.controller;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,34 +29,29 @@ public class AlunoController {
 	
 	@ApiOperation(value = "Retorna uma lista com todos os alunos cadastrados na base de dados")
 	@GetMapping()
-	public ResponseEntity<Response<List<Pessoa>>> listar( ){		
-		return service.listar();
+	public ResponseEntity<Response<List<Pessoa>>> listar( ){
+		
+		List<Pessoa> alunos = service.listar();
+		
+		return null;
+		
 	}
 	
 	@ApiOperation(value = "Realiza o cadastro de um novo aluno e retorno os dasdos do aluno")
 	@PostMapping()
 	public ResponseEntity<Response<AlunoCurso>> cadastrar(@RequestBody @Valid AlunoDto alunoDto,BindingResult result) {
-		return service.cadastrar(alunoDto,result);			 
+		AlunoCurso aluno =  service.cadastrar(alunoDto,result);	
+		return null;
 	}
 	
 	@ApiOperation(value = "Realiza a busca de um aluno específico, passando por paramentro o ID ")
 	@GetMapping("/{id}")
 	public ResponseEntity<Response<Pessoa>> listarPorId(@PathVariable long id){
-		return service.litarPorId(id);
+		
+		Pessoa aluno = service.buscarPorId(id);
+		
+		return null;
 	}
-	
-	
-	@ApiOperation(value = "Atualiza os dados de um aluno passando por paramentro o ID, e no corpo os dados a serem atualizados ")
-	@PutMapping("/{id}")
-	public ResponseEntity<Response<Pessoa>> atualizar(@PathVariable("id") long id, @RequestBody  AlunoDto alunoDto){
-		return service.atualizar(id,alunoDto);
-	}
-	
-	@ApiOperation(value = "Deletar aluno passando por paramentro o ID")
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Response<Pessoa>> deletar(@PathVariable long id){
-		 return service.deletar(id);
-	}
-	
+		
 		
 }
