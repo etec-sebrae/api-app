@@ -1,11 +1,9 @@
 package br.gov.etec.app.controller;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import br.gov.etec.app.dtos.FuncionarioDto;
-import br.gov.etec.app.entity.Funcionario;
 import br.gov.etec.app.entity.Pessoa;
-import br.gov.etec.app.response.Response;
 import br.gov.etec.app.services.FuncionarioService;
 
 @RestController
@@ -28,15 +23,15 @@ public class FuncionarioController {
 	FuncionarioService service;
 	
 	@GetMapping
-	public ResponseEntity<Response<List<LinkedHashMap<String,Object>>>> listarOperadores(){
+	public ResponseEntity<?> listarOperadores(){
 		List<Pessoa> funcionarios = service.listar();
-		return null;
+		return ResponseEntity.status(HttpStatus.OK).body(funcionarios);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Response<LinkedHashMap<String, Object>>> cadastroOperadores(@RequestBody @Valid FuncionarioDto funcionarioDto, BindingResult result){
+	public ResponseEntity<Pessoa> cadastroOperadores(@RequestBody @Valid FuncionarioDto funcionarioDto, BindingResult result){
 		Pessoa funcionario = service.cadastrar(funcionarioDto,result);
-		return null;
+		return ResponseEntity.status(HttpStatus.OK).body(funcionario);
 	}
 	
 

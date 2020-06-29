@@ -1,8 +1,8 @@
 package br.gov.etec.app.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import br.gov.etec.app.dtos.EventoDto;
@@ -15,10 +15,8 @@ public class EventoService {
 	@Autowired
 	private EventoRepository repository;
 	
-	public List<Evento> consultar() {
-		List<Evento> eventos = repository.findAll();		
-		repository.flush();
-		return eventos;
+	public Page<Evento> consultar(Pageable pageable) {		
+		return repository.findAll(pageable);	
 	}
 	
 	

@@ -3,12 +3,10 @@ package br.gov.etec.app.dtos;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
-
 import br.gov.etec.app.entity.Curso;
 import br.gov.etec.app.entity.Documento;
 import br.gov.etec.app.entity.Pessoa;
 import br.gov.etec.app.entity.SolicitacaoDocumento;
-
 
 public class SolicitacaoDocumentoDto {
 	
@@ -17,20 +15,19 @@ public class SolicitacaoDocumentoDto {
 	@NotNull
 	private long id_documento;
 	@NotNull
-	private long id_curso;
+	private long id_curso;	
+	private int status;
 	
 	public SolicitacaoDocumentoDto() {
 		
 	}
-	
-	
+		
 	public SolicitacaoDocumentoDto(long id_aluno, long id_documento, long id_curso) {
 		super();
 		this.id_aluno = id_aluno;
 		this.id_documento = id_documento;
 		this.id_curso = id_curso;
 	}
-
 
 	public long getId_aluno() {
 		return id_aluno;
@@ -53,6 +50,13 @@ public class SolicitacaoDocumentoDto {
 		this.id_curso = id_curso;
 	}
 
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 	public SolicitacaoDocumento transformaSolicitacoesDto(Documento documento, Pessoa aluno,Curso curso){
 		return new SolicitacaoDocumento(1,new Date(),documento,aluno,curso);

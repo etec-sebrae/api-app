@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -22,16 +21,13 @@ public class SolicitacaoDocumento {
 	private int status;
 	@Column(name = "data_abertura", nullable = false)
 	private Date data_abertura ;
-	@Column(name = "data_conclusao", nullable = false)
+	@Column(name = "data_conclusao")
 	private Date data_conclusao ;
 	@ManyToOne
-	@JoinColumn(name = "documento_id",referencedColumnName = "id",nullable = false)
 	private Documento documento;
 	@ManyToOne
-	@JoinColumn(name = "aluno_id",referencedColumnName = "id",nullable = false)
 	private Pessoa aluno;
 	@ManyToOne
-	@JoinColumn(name = "curso_id",referencedColumnName = "id",nullable = false)
 	private Curso curso;
 		
 	public SolicitacaoDocumento() {

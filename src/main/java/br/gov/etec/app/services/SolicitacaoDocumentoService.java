@@ -1,7 +1,9 @@
 package br.gov.etec.app.services;
 
-import java.util.List;
+import java.util.LinkedHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import br.gov.etec.app.dtos.SolicitacaoDocumentoDto;
@@ -27,11 +29,11 @@ public class SolicitacaoDocumentoService {
 	private CursoService cursoService;
 	
 		
-	public List<SolicitacaoDocumento> litar(){		
-		List<SolicitacaoDocumento> solicitacoes = repositorySolicitacoes.findAll();		
-		repositorySolicitacoes.flush();		
-		return solicitacoes;		
-	}
+	public Page<SolicitacaoDocumento> litar(Pageable pageable){			
+        return repositorySolicitacoes.findAll(pageable);
+        
+    }
+				 	
 	
 	public SolicitacaoDocumento cadastrar(SolicitacaoDocumentoDto dto, BindingResult result){
 		if(result.hasErrors()) {
@@ -40,14 +42,24 @@ public class SolicitacaoDocumentoService {
 		
 		Pessoa aluno = alunoService.buscarPorId(dto.getId_aluno());		
 		Documento documento = documentoService.buscarPorId(dto.getId_documento());		
-		Curso curso = cursoService.buscarPorId(dto.getId_curso()); 		
-		
-		SolicitacaoDocumento solicitacoes = repositorySolicitacoes.saveAndFlush(dto.transformaSolicitacoesDto(documento, aluno,curso));
-		
+		Curso curso = cursoService.buscarPorId(dto.getId_curso());		
+		SolicitacaoDocumento solicitacoes = repositorySolicitacoes.save(dto.transformaSolicitacoesDto(documento, aluno,curso));		
 		return solicitacoes;		
-		
 	}
 	
+	public SolicitacaoDocumento atualizar(long id, SolicitacaoDocumentoDto dto){		
+		SolicitacaoDocumento solicitacaoData = repositorySolicitacoes.findById(id);				
+		if(solicitacaoData == null) {
+			LinkedHashMap<String, Object> al = new LinkedHashMap<>();
+			al.put("defaultMessage", "Solicitacao não localizado");
+			return null;
+		}		
+		if(dto.getStatus() != 0L) {
+			solicitacaoData.setStatus((int)dto.getStatus());
+		}		
+		SolicitacaoDocumento _solicitacoes = repositorySolicitacoes.save(solicitacaoData);	
+		return _solicitacoes;		
+	}
 	
 
 }
