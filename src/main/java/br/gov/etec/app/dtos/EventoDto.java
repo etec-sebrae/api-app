@@ -30,11 +30,9 @@ public class EventoDto {
 		
 	}
 
-
 	public String getNome() {
 		return nome;
 	}
-
 
 	public void setNome(String nome) {
 		this.nome = nome;
@@ -57,41 +55,21 @@ public class EventoDto {
 		this.status = status;
 	}
 
-
-
-
-
 	public Date getDataInicio() {
 		return dataInicio;
 	}
-
-
-
-
 
 	public void setDataInicio(Date dataInicio) {
 		this.dataInicio = dataInicio;
 	}
 
-
-
-
-
 	public Date getDataFim() {
 		return dataFim;
 	}
 
-
-
-
-
 	public void setDataFim(Date dataFim) {
 		this.dataFim = dataFim;
 	}
-
-
-
-
 
 	public Evento tranformaEventoDto() {
 		return new Evento(nome,descricao,status,dataInicio,dataFim);

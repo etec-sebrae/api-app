@@ -9,11 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import br.gov.etec.app.authentication.PerfilEnum;
+import br.gov.etec.app.enuns.PerfilEnum;
 
 @Entity
-@Table(name = "tb_login")
-public class Login {
+@Table(name = "tb_usuario")
+public class Usuario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,12 +27,12 @@ public class Login {
 	private PerfilEnum perfil;
 	
 	
-	public Login() {
+	public Usuario() {
 		
 	}
 		
 	
-	public Login(String email, String senha, PerfilEnum perfil) {
+	public Usuario(String email, String senha, PerfilEnum perfil) {
 		super();
 		this.email = email;
 		this.senha = senha;

@@ -5,17 +5,18 @@ import java.util.List ;
 import org.springframework.security.core.GrantedAuthority ;
 import org.springframework.security.core.authority.SimpleGrantedAuthority ;
 
-import br.gov.etec.app.entity.Login;
+import br.gov.etec.app.entity.Usuario;
+import br.gov.etec.app.enuns.PerfilEnum;
 
 public class JwtUserFactory {
 	
 	private JwtUserFactory(){
 	}
 	
-	public static JwtUser create(Login login) {
+	public static JwtUser create(Usuario usuario) {
 		
-		return new JwtUser(login.getId(),login.getEmail(),login.getSenha(),
-		mapToGrantedAuthorities(login.getPerfil()));
+		return new JwtUser(usuario.getId(),usuario.getEmail(),usuario.getSenha(),
+		mapToGrantedAuthorities(usuario.getPerfil()));
 	}
 	
 	

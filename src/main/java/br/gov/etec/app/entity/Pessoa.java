@@ -4,54 +4,60 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import br.gov.etec.app.enuns.TipoEnum;
 
 @Entity
-@Table(name="tb_aluno")
-public class Aluno {
+@Table(name = "tb_pessoa")
+public class Pessoa {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO )
 	private long id;
 	@Column(name = "nome", nullable = false,length = 50)
 	private String nome;
+	@Column(name = "matricula", unique = true, nullable = false, length = 12)
+	private long matricula;
 	@Column(name = "rg", nullable = false, length = 12)
 	private String rg;
 	@Column(name = "cpf",nullable = false, length = 14,unique = true)
 	private String cpf;	
-	@Column(name = "matricula", unique = true, nullable = false, length = 12)
-	private long matricula;
-	@Column(name = "dt_nascimento", nullable = false)
+	@Column(name = "data_nasc", nullable = false)
 	private Date data_nasc;
-	@ManyToOne
-	@JoinColumn(name = "curso_id",referencedColumnName = "id",nullable = false)
-	private Curso curso;
-	@ManyToOne
-	@JoinColumn(name = "login_id",referencedColumnName = "id",nullable = false)
-	private Login login;
-		
+	@Column(name = "email", nullable = false, unique = true, length = 55)
+	private String email;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tipo")
+	private TipoEnum tipo; 
+	@OneToOne
+	private Usuario usuario;
 	
-	public Aluno() {
+	
+	public Pessoa() {
 		// TODO Auto-generated constructor stub
 	}
-		
-	public Aluno(String nome, String rg, String cpf,long matricula, Date data_nasc, Curso curso, Login login) {
+	
+	
+	
+	public Pessoa(String nome, long matricula, String rg, String cpf, Date data_nasc, String email, TipoEnum tipo) {
 		super();
 		this.nome = nome;
+		this.matricula = matricula;
 		this.rg = rg;
 		this.cpf = cpf;
-		this.matricula = matricula;
 		this.data_nasc = data_nasc;
-		this.curso = curso;
-		this.login = login;
-		
+		this.email = email;
+		this.tipo = tipo;
 	}
+
+
 
 	public long getId() {
 		return id;
@@ -65,6 +71,12 @@ public class Aluno {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	public long getMatricula() {
+		return matricula;
+	}
+	public void setMatricula(long matricula) {
+		this.matricula = matricula;
+	}
 	public String getRg() {
 		return rg;
 	}
@@ -77,40 +89,31 @@ public class Aluno {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-		
 	public Date getData_nasc() {
 		return data_nasc;
 	}
-
 	public void setData_nasc(Date data_nasc) {
 		this.data_nasc = data_nasc;
 	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public TipoEnum getTipo() {
+		return tipo;
+	}
+	public void setTipo(TipoEnum tipo) {
+		this.tipo = tipo;
+	}
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 	
-	public Curso getCurso() {
-		return curso;
-	}
-
-
-	public void setCurso(Curso curso) {
-		this.curso = curso;
-	}
-
-
-	public Login getLogin() {
-		return login;
-	}
-
-
-	public void setLogin(Login login) {
-		this.login = login;
-	}
-
-	public long getMatricula() {
-		return matricula;
-	}
-
-	public void setMatricula(long matricula) {
-		this.matricula = matricula;
-	}
-		
+	
+	
 }

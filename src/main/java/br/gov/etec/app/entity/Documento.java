@@ -12,10 +12,10 @@ import javax.persistence.Table;
 public class Documento {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@Column(name = "tipo", nullable = false, length = 50)
-	private String tipo;
+	@Column(name = "nome", nullable = false, length = 50)
+	private String nome;
 	@Column(name = "descricao", nullable = false, length = 100)
 	private String descricao;
 	
@@ -27,11 +27,9 @@ public class Documento {
 
 	public Documento(String tipo, String descricao) {
 		super();
-		this.tipo = tipo;
+		this.nome = tipo;
 		this.descricao = descricao;
 	}
-
-
 
 	public long getId() {
 		return id;
@@ -41,12 +39,12 @@ public class Documento {
 		this.id = id;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setNome(String tipo) {
+		this.nome = tipo;
 	}
 
 	public String getDescricao() {
@@ -56,8 +54,6 @@ public class Documento {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
-	
 	
 	
 }
