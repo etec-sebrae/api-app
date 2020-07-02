@@ -29,9 +29,8 @@ public class SolicitacaoDocumentoService {
 	private CursoService cursoService;
 	
 		
-	public Page<SolicitacaoDocumento> litar(Pageable pageable){			
-        return repositorySolicitacoes.findAll(pageable);
-        
+	public Page<SolicitacaoDocumento> listar(Pageable pageable){			
+        return repositorySolicitacoes.findAll(pageable);        
     }
 				 	
 	

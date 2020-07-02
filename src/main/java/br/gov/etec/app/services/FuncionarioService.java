@@ -28,10 +28,12 @@ public class FuncionarioService {
 		if(result.hasErrors()) {
 			return null;
 		}
-		
-		Usuario usuario = usuarioService.criarUsuarioAluno(funcionarioDto.getEmail(),funcionarioDto.getSenha());
-		Pessoa funcionario = pessoaFuncionarioRepository.save(funcionarioDto.tranformaFuncionarioDto(usuario));		
 				
+		Pessoa funcionario = pessoaFuncionarioRepository.saveAndFlush(funcionarioDto.tranformaFuncionarioDto());		
+		Usuario usuario = usuarioService.criarUsuarioFuncionario(funcionarioDto.getEmail(),funcionarioDto.getSenha());		
+		funcionario.setUsuario(usuario);		
+		pessoaFuncionarioRepository.saveAndFlush(funcionario);
+		
 		return funcionario;
 	}
 	

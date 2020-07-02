@@ -24,11 +24,11 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService{
 		Optional<Usuario> login = loginRepository.findByEmail(username);
 		loginRepository.flush();
 		System.out.println(login.isPresent());
-		if (login.isPresent()) {
-			return JwtUserFactory.create(login.get());
+		if (!login.isPresent()) {
+			throw new UsernameNotFoundException("Email não encontrado.");
 		}
+		return JwtUserFactory.create(login.get());
 		
-		throw new UsernameNotFoundException("Email não encontrado.");
 	}
 	
 }

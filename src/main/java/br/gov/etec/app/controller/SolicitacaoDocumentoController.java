@@ -28,7 +28,7 @@ public class SolicitacaoDocumentoController {
 	
 	@GetMapping
 	public ResponseEntity<?> listar(Pageable pageable){	
-		Page<SolicitacaoDocumento> documentos = service.litar(pageable);
+		Page<SolicitacaoDocumento> documentos = service.listar(pageable);
 		return ResponseEntity.status(HttpStatus.OK).body(documentos);		
 	}
 	

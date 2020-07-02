@@ -30,10 +30,12 @@ import org.springframework.web.bind.annotation.RestController;
 import br.gov.etec.app.authentication.JwtTokenUtil;
 import br.gov.etec.app.dtos.JwtAuthenticationDto;
 import br.gov.etec.app.dtos.TokenDto;
+import br.gov.etec.app.entity.Pessoa;
+import br.gov.etec.app.repository.PessoaRepository;
 import br.gov.etec.app.response.Response;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @CrossOrigin(origins = "*")
 public class AuthenticationController {
 
@@ -51,6 +53,9 @@ public class AuthenticationController {
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
+	@Autowired
+	private PessoaRepository pessoaRepository;
+	
 	/**
 	* Gera e retorna um novo token JWT.
 	*
@@ -61,22 +66,18 @@ public class AuthenticationController {
 	*/
 	
 	@PostMapping()
-	public ResponseEntity<Response<TokenDto>> gerarTokenJwtOperador(@Valid @RequestBody JwtAuthenticationDto authenticationDto, BindingResult result  ) throws AuthenticationException {
-		Response<TokenDto> response = new Response<>();
-		if ( result.hasErrors()){
+	public ResponseEntity<?> gerarTokenJwtOperador(@Valid @RequestBody JwtAuthenticationDto authenticationDto, BindingResult result  ) throws AuthenticationException {
+				
+		if ( result.hasErrors()){			
 			log.error("Erro validando lançamento: {}",result.getAllErrors());	
-			
-			for (int i = 0; i < result.getErrorCount(); i++) {
-				LinkedHashMap<String, Object> al = new LinkedHashMap<>();
+			LinkedHashMap<String, Object> al = new LinkedHashMap<>();
+			for (int i = 0; i < result.getErrorCount(); i++) {				
 				ObjectError erro = result.getFieldErrors().get(i);
 				al.put("defaultMessage", erro.getDefaultMessage());
 				al.put("field", result.getFieldErrors().get(i).getField());
 				al.put("objectName", erro.getObjectName());				
-				
-				response.getErrors().add(al);
-			}
-			
-			return ResponseEntity.badRequest().body( response );
+			}			
+			return ResponseEntity.badRequest().body( al );
 		}
 		
 		log.info("Gerando Token para o email {}",authenticationDto.getEmail());
@@ -91,16 +92,12 @@ public class AuthenticationController {
 		
 		UserDetails userDetails = userDetailsService.loadUserByUsername(
 				authenticationDto.getEmail()
-		);
+		);				
 		
-		
-		
-		String token = jwtTokenUtil.obterToken(userDetails);
-		
-		response.setData(new TokenDto(token));
-		
-		return ResponseEntity.ok(response);
+		String token = jwtTokenUtil.obterToken(userDetails);		
+		Pessoa pessoa = pessoaRepository.findByEmail(authenticationDto.getEmail());		
 				
+		return ResponseEntity.ok(new TokenDto(token,pessoa));				
 	}
 	
 	

@@ -13,10 +13,10 @@ public class JwtUserFactory {
 	private JwtUserFactory(){
 	}
 	
-	public static JwtUser create(Usuario login) {
+	public static JwtUser create(Usuario usuario) {
 		
-		return new JwtUser(login.getId(),login.getEmail(),login.getSenha(),
-		mapToGrantedAuthorities(login.getPerfil()));
+		return new JwtUser(usuario.getId(),usuario.getEmail(),usuario.getSenha(),
+		mapToGrantedAuthorities(usuario.getPerfil()));
 	}
 	
 	

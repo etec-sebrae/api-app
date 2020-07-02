@@ -2,16 +2,11 @@ package br.gov.etec.app.dtos;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import br.gov.etec.app.entity.Pessoa;
-import br.gov.etec.app.entity.Usuario;
 import br.gov.etec.app.enuns.TipoEnum;
 
 @SuppressWarnings("deprecation")
@@ -100,8 +95,8 @@ public class FuncionarioDto implements Serializable {
 		this.senha = senha;
 	}
 
-	public Pessoa tranformaFuncionarioDto(Usuario usuario) {
-		return new Pessoa(nome,matricula,rg,cpf,data_nasc,email,TipoEnum.FUNCIONARIO,usuario);
+	public Pessoa tranformaFuncionarioDto() {
+		return new Pessoa(nome,matricula,rg,cpf,data_nasc,email,TipoEnum.FUNCIONARIO);
 	}
 
 

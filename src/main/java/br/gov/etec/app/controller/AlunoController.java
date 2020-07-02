@@ -3,6 +3,7 @@ package br.gov.etec.app.controller;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -28,15 +29,16 @@ public class AlunoController {
 	
 	@ApiOperation(value = "Retorna uma lista com todos os alunos cadastrados na base de dados")
 	@GetMapping()
-	public ResponseEntity<?> listar( ){		
-		List<Pessoa> alunos = service.listar();		
+	public ResponseEntity<?> listar(Pageable pageable){		
+		List<Pessoa> alunos = service.listar(pageable);		
 		return ResponseEntity.status(HttpStatus.OK).body(alunos);		
 	}
 	
 	@ApiOperation(value = "Realiza o cadastro de um novo aluno e retorno os dasdos do aluno")
 	@PostMapping()
-	public ResponseEntity<?> cadastrar(@RequestBody @Valid AlunoDto alunoDto,BindingResult result) {
-		AlunoCurso aluno =  service.cadastrar(alunoDto,result);	
+	public ResponseEntity<?> cadastrar(@RequestBody @Valid AlunoDto alunoDto) {
+				
+		AlunoCurso aluno =  service.cadastrar(alunoDto);	
 		return ResponseEntity.status(HttpStatus.OK).body(aluno);
 	}
 	

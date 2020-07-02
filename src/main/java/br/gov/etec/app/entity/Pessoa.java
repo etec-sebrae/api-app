@@ -31,7 +31,7 @@ public class Pessoa {
 	private String cpf;	
 	@Column(name = "data_nasc", nullable = false)
 	private Date data_nasc;
-	@Column(name = "email")
+	@Column(name = "email", nullable = false, unique = true, length = 55)
 	private String email;
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo")
@@ -46,8 +46,7 @@ public class Pessoa {
 	
 	
 	
-	public Pessoa(String nome, long matricula, String rg, String cpf, Date data_nasc, String email, TipoEnum tipo,
-			Usuario usuario) {
+	public Pessoa(String nome, long matricula, String rg, String cpf, Date data_nasc, String email, TipoEnum tipo) {
 		super();
 		this.nome = nome;
 		this.matricula = matricula;
@@ -56,7 +55,6 @@ public class Pessoa {
 		this.data_nasc = data_nasc;
 		this.email = email;
 		this.tipo = tipo;
-		this.usuario = usuario;
 	}
 
 

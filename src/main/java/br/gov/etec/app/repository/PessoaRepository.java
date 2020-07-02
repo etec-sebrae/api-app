@@ -10,4 +10,5 @@ import br.gov.etec.app.enuns.TipoEnum;
 public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 	Pessoa findById(long id);
 	List<Pessoa> findByTipo(TipoEnum tipo);
+	Pessoa findByEmail(String email);
 }

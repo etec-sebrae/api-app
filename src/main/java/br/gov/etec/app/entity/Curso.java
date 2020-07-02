@@ -29,10 +29,11 @@ public class Curso {
 		
 	}
 
-	public Curso(String nome, String descricao) {
+	public Curso(String nome, String descricao, String codigo) {
 		super();
 		this.nome = nome;
 		this.descricao = descricao;
+		this.codigo = codigo;
 	}
 		
 	
