@@ -22,10 +22,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.gov.etec.app.authentication.JwtTokenUtil;
 import br.gov.etec.app.dtos.JwtAuthenticationDto;
-import br.gov.etec.app.dtos.TokenDto;
+import br.gov.etec.app.dtos.TokenAlunoDto;
+import br.gov.etec.app.dtos.TokenPessoaDto;
+import br.gov.etec.app.entity.AlunoCurso;
 import br.gov.etec.app.entity.Pessoa;
+import br.gov.etec.app.enuns.TipoEnum;
 import br.gov.etec.app.repository.PessoaRepository;
 import br.gov.etec.app.response.Response;
+import br.gov.etec.app.services.AlunoCursoService;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -49,6 +53,9 @@ public class AuthenticationController {
 	@Autowired
 	private PessoaRepository pessoaRepository;
 	
+	@Autowired 
+	private AlunoCursoService alunoCursoService;
+	
 	/**
 	* Gera e retorna um novo token JWT.
 	*
@@ -59,9 +66,9 @@ public class AuthenticationController {
 	*/
 	
 	@PostMapping()
-	public ResponseEntity<?> gerarTokenJwtOperador(@Valid @RequestBody JwtAuthenticationDto authenticationDto   ) throws AuthenticationException {
+	public ResponseEntity<?> gerarTokenJwtOperador(@Valid @RequestBody JwtAuthenticationDto authenticationDto) throws AuthenticationException {
 			
-		log.info("Gerando Token para o email {}",authenticationDto.getEmail());
+		log.info("Gerando Token para o email {}",authenticationDto.getEmail());	
 		
 		Authentication authentication = authenticationManager.authenticate( 
 				new UsernamePasswordAuthenticationToken(
@@ -69,16 +76,20 @@ public class AuthenticationController {
 				)
 		);
 		
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		
+		SecurityContextHolder.getContext().setAuthentication(authentication);		
 		UserDetails userDetails = userDetailsService.loadUserByUsername(
 				authenticationDto.getEmail()
 		);				
 		
 		String token = jwtTokenUtil.obterToken(userDetails);		
-		Pessoa pessoa = pessoaRepository.findByEmail(authenticationDto.getEmail());		
+		Pessoa pessoa = pessoaRepository.findByEmail(authenticationDto.getEmail());	
+		
+		if (pessoa.getTipo() == TipoEnum.ALUNO){
+			AlunoCurso aluno = alunoCursoService.buscaPorAluno(pessoa);
+			return ResponseEntity.ok(new TokenAlunoDto(token,aluno));
+		}
 				
-		return ResponseEntity.ok(new TokenDto(token,pessoa));				
+		return ResponseEntity.ok(new TokenPessoaDto(token,pessoa));				
 	}
 	
 	
@@ -92,9 +103,9 @@ public class AuthenticationController {
 	*/
 	
 	@PostMapping ( value = "/refresh" )
-	public ResponseEntity<Response<TokenDto>> gerarRefreshTokenJwt(HttpServletRequest request ) {
+	public ResponseEntity<Response<TokenPessoaDto>> gerarRefreshTokenJwt(HttpServletRequest request ) {
 		log.info("Gerando refresh token JWT.");
-		Response<TokenDto>response = new Response<TokenDto>();
+		Response<TokenPessoaDto>response = new Response<TokenPessoaDto>();
 		Optional<String> token = Optional.ofNullable(request.getHeader(TOKEN_HEADER));
 		if (token.isPresent() && token.get().startsWith(BEARER_PREFIX)){
 			token = Optional.of(token.get().substring(7));
@@ -115,7 +126,7 @@ public class AuthenticationController {
 		}
 		
 		String refreshedToken = jwtTokenUtil.refreshToken(token.get());
-		response.setData( new TokenDto(refreshedToken));
+		response.setData( new TokenPessoaDto(refreshedToken));
 		
 		return ResponseEntity.ok(response);
 	}

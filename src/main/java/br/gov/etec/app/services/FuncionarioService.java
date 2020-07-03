@@ -24,14 +24,14 @@ public class FuncionarioService {
 		return pessoaFuncionario;	
 	}
 	
-	public Pessoa cadastrar(FuncionarioDto funcionarioDto,  BindingResult result){
-		if(result.hasErrors()) {
-			return null;
-		}
-				
-		Pessoa funcionario = pessoaFuncionarioRepository.saveAndFlush(funcionarioDto.tranformaFuncionarioDto());		
-		Usuario usuario = usuarioService.criarUsuarioFuncionario(funcionarioDto.getEmail(),funcionarioDto.getSenha());		
-		funcionario.setUsuario(usuario);		
+	public Pessoa cadastrar(FuncionarioDto funcionarioDto){
+						
+		Pessoa funcionario = pessoaFuncionarioRepository.saveAndFlush(funcionarioDto.tranformaFuncionarioDto());
+		
+		Usuario usuario = usuarioService.criarUsuarioFuncionario(funcionarioDto.getEmail(),funcionarioDto.getSenha());	
+		
+		funcionario.setUsuario(usuario);	
+		
 		pessoaFuncionarioRepository.saveAndFlush(funcionario);
 		
 		return funcionario;

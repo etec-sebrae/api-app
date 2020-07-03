@@ -18,5 +18,9 @@ public class AlunoCursoService {
 		AlunoCurso alunoCurso = alunoCursoRepository.saveAndFlush(entity);		
 		return alunoCurso;		
 	}
+	
+	public AlunoCurso buscaPorAluno(Pessoa aluno) {
+		return alunoCursoRepository.findByAluno(aluno);
+	}
 
 }

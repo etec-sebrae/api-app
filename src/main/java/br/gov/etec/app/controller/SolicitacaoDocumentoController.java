@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,8 +32,8 @@ public class SolicitacaoDocumentoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> cadastro(@RequestBody @Valid SolicitacaoDocumentoDto dto, BindingResult result ){
-		SolicitacaoDocumento solicatacao = service.cadastrar(dto, result);
+	public ResponseEntity<?> cadastro(@RequestBody @Valid SolicitacaoDocumentoDto dto){
+		SolicitacaoDocumento solicatacao = service.cadastrar(dto);
 		return ResponseEntity.status(HttpStatus.OK).body(solicatacao);
 	}
 	

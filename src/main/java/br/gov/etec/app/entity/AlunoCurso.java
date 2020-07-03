@@ -15,7 +15,7 @@ public class AlunoCurso {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@ManyToOne
-	private Pessoa pessoa;
+	private Pessoa aluno;
 	@ManyToOne
 	private Curso curso;
 	
@@ -24,9 +24,9 @@ public class AlunoCurso {
 	}
 	
 
-	public AlunoCurso(Pessoa pessoa, Curso curso) {
+	public AlunoCurso(Pessoa aluno, Curso curso) {
 		super();
-		this.pessoa = pessoa;
+		this.aluno = aluno;
 		this.curso = curso;
 	}
 
@@ -40,12 +40,12 @@ public class AlunoCurso {
 		this.id = id;
 	}
 
-	public Pessoa getPessoa() {
-		return pessoa;
+	public Pessoa getAluno() {
+		return aluno;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
+	public void setAluno(Pessoa aluno) {
+		this.aluno = aluno;
 	}
 
 	public Curso getCurso() {
@@ -55,7 +55,6 @@ public class AlunoCurso {
 	public void setCurso(Curso curso) {
 		this.curso = curso;
 	}
-	
-	
+		
 
 }
