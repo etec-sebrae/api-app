@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import br.gov.etec.app.dtos.EventoDto;
 import br.gov.etec.app.entity.Evento;
 import br.gov.etec.app.repository.EventoRepository;
@@ -20,11 +19,8 @@ public class EventoService {
 	}
 	
 	
-	public Evento cadastrar(EventoDto dto,BindingResult result) {
-		if(result.hasErrors()) {							
-			return null;
-		}
-		
+	public Evento cadastrar(EventoDto dto) {
+				
 		Evento evento = repository.saveAndFlush(dto.tranformaEventoDto());		
 		return evento;
 	}

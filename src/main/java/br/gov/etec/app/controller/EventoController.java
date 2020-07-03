@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,8 +28,8 @@ public class EventoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> cadastrar(@RequestBody @Valid EventoDto dto,BindingResult result) {
-		Evento evento = service.cadastrar(dto,result);
+	public ResponseEntity<?> cadastrar(@RequestBody @Valid EventoDto dto) {
+		Evento evento = service.cadastrar(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(evento);
 	}
 	

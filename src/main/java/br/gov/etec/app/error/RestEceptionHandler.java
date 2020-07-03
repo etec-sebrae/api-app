@@ -77,10 +77,12 @@ public class RestEceptionHandler implements Serializable{
 		
 		for (int i = 0; i < result.getBindingResult().getErrorCount(); i++) {
 			LinkedHashMap<String, Object> error = new LinkedHashMap<>();			
-			ObjectError erro = result.getBindingResult().getFieldErrors().get(i);			
+			ObjectError erro = result.getBindingResult().getFieldErrors().get(i);	
+			
 			error.put("defaultMessage", erro.getDefaultMessage());
 			error.put("field", result.getBindingResult().getFieldErrors().get(i).getField());
-			error.put("objectName", erro.getObjectName());		
+			error.put("objectName", erro.getObjectName());	
+			
 			listaErros.add(error);
 		}
 		
