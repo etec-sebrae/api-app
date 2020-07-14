@@ -1,18 +1,11 @@
 package br.gov.etec.app.dtos;
 
-import java.io.Serializable;
 import org.hibernate.validator.constraints.NotBlank;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import br.gov.etec.app.entity.Curso;
 
 @SuppressWarnings("deprecation")
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class CursoDto implements Serializable {
+public class CursoDto {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4126300812484790031L;
 
 	@NotBlank
 	private String nome;
@@ -21,7 +14,7 @@ public class CursoDto implements Serializable {
 	@NotBlank
 	private String codigo;
 		
-	public CursoDto() {}
+	public CursoDto(){}
 	
 	public String getNome() {
 		return nome;

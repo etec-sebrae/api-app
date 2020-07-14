@@ -13,14 +13,22 @@ public class EscolaService {
 	
 	@Autowired
 	private EscolaRepository escolaRepository;
-	
+		
 	public Page<Escola> listar(Pageable pageable){
 		return escolaRepository.findAll(pageable);
 	}
 		
 	public Escola cadastro(EscolaDto escolaDto) {
-		Escola escola = escolaRepository.save(escolaDto.transformaEscolaDto());		
-		return escola;
+				
+		Escola escola = new Escola();		
+		escola.setCodigo(escolaDto.getCodigo());
+		escola.setEmail(escolaDto.getEmail());
+		escola.setNome(escolaDto.getNome());
+		escola.setStatus(escolaDto.getStatus());		
+		
+		Escola escolaData = escolaRepository.save(escola);	
+		
+		return escolaData;
 	}
 	
 }

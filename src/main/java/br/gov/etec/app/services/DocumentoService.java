@@ -14,7 +14,7 @@ public class DocumentoService {
 	
 	public List<Documento> listar() {		
 		List<Documento> documentos =  repository.findAll();		
-		repository.findAll();		
+		repository.findAll();
 		return documentos;			
 	}
 		

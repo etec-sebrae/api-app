@@ -1,11 +1,15 @@
 package br.gov.etec.app.dtos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import br.gov.etec.app.entity.Curso;
 import br.gov.etec.app.entity.Pessoa;
 import br.gov.etec.app.enuns.TipoEnum;
 
@@ -34,7 +38,8 @@ public class AlunoDto implements Serializable {
 	@NotNull
 	private long id_curso;
 	@NotBlank
-	private String senha;
+	private String senha;	
+	private List<Curso> cursos = new ArrayList<>(); 
 	
 	
 	public AlunoDto() {}
@@ -102,6 +107,15 @@ public class AlunoDto implements Serializable {
 
 	public void setMatricula(long matricula) {
 		this.matricula = matricula;
+	}
+	
+	
+	public List<Curso> getCursos() {
+		return cursos;
+	}
+
+	public void setCursos(List<Curso> cursos) {
+		this.cursos = cursos;
 	}
 
 	public Pessoa transformaAlunoDto() {

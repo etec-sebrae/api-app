@@ -2,21 +2,21 @@ package br.gov.etec.app.dtos;
 
 import br.gov.etec.app.entity.Pessoa;
 
-public class TokenPessoaDto {
+public class TokenDto {
 	
 	private String token;
 	private Pessoa pessoa;
 	
-	public TokenPessoaDto() {
+	public TokenDto() {
 		
 	}
 	
-	public TokenPessoaDto(String token) {
+	public TokenDto(String token) {
 		super();
 		this.token = token;
 	}
 
-	public TokenPessoaDto(String token, Pessoa pessoa) {
+	public TokenDto(String token, Pessoa pessoa) {
 		super();
 		this.token = token;
 		this.pessoa = pessoa;

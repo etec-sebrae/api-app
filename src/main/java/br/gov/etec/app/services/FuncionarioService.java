@@ -3,7 +3,6 @@ package br.gov.etec.app.services;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import br.gov.etec.app.dtos.FuncionarioDto;
 import br.gov.etec.app.entity.Pessoa;
 import br.gov.etec.app.entity.Usuario;

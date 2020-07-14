@@ -1,7 +1,9 @@
 package br.gov.etec.app.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
-
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,9 +11,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import br.gov.etec.app.enuns.TipoEnum;
 
 @Entity
@@ -39,12 +41,14 @@ public class Pessoa {
 	@OneToOne
 	private Usuario usuario;
 	
+	@ManyToMany(mappedBy = "alunos", cascade = CascadeType.ALL)
+	private List<Curso> cursos = new ArrayList<>();
+	
 	
 	public Pessoa() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+		
 	
 	public Pessoa(String nome, long matricula, String rg, String cpf, Date data_nasc, String email, TipoEnum tipo) {
 		super();
@@ -57,6 +61,19 @@ public class Pessoa {
 		this.tipo = tipo;
 	}
 
+	
+
+	public Pessoa(String nome, long matricula, String rg, String cpf, Date data_nasc, String email, TipoEnum tipo, List<Curso> cursos) {
+		super();
+		this.nome = nome;
+		this.matricula = matricula;
+		this.rg = rg;
+		this.cpf = cpf;
+		this.data_nasc = data_nasc;
+		this.email = email;
+		this.tipo = tipo;
+		this.cursos = cursos;
+	}
 
 
 	public long getId() {
@@ -113,7 +130,11 @@ public class Pessoa {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
-	
-	
+	public List<Curso> getCursos() {
+		return cursos;
+	}
+	public void setCursos(List<Curso> cursos) {
+		this.cursos = cursos;
+	}
+		
 }

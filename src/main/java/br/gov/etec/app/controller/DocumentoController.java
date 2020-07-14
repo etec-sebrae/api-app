@@ -22,7 +22,7 @@ public class DocumentoController {
 	private DocumentoService documentoService;
 	
 	@GetMapping
-	public ResponseEntity<List<Documento>>listar(){		
+	public ResponseEntity<?>listar(){		
 		List<Documento> documentos = documentoService.listar();		
 		return ResponseEntity.status(HttpStatus.OK).body(documentos);	
 	}
