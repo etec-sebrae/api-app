@@ -16,9 +16,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import br.gov.etec.app.enuns.TipoEnum;
 
 @Entity
@@ -43,7 +40,6 @@ public class Pessoa {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo")
 	private TipoEnum tipo;
-	@JsonIgnore
 	@OneToOne
 	private Usuario usuario;
 	@ManyToMany(cascade = CascadeType.ALL)

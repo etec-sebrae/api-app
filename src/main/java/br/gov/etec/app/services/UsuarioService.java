@@ -24,7 +24,7 @@ public class UsuarioService {
 		
 		String senhaEncoder = senhaUtils.gerarBCrypt(senha);
 		
-		Usuario entity = new Usuario(email,senhaEncoder,PerfilEnum.ROLE_USUARIO);
+		Usuario entity = new Usuario(email,senhaEncoder,PerfilEnum.ROLE_ALUNO);
 				
 		Usuario usuario = repository.save(entity);
 		
