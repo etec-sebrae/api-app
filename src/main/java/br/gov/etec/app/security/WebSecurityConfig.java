@@ -62,8 +62,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.permitAll().anyRequest().authenticated();
 		httpSecurity.addFilterBefore(authenticationTokenFilterBean(),
 					UsernamePasswordAuthenticationFilter.class);
-		httpSecurity.headers().cacheControl();	
-		
+		httpSecurity.headers().cacheControl();			
 		   
 	}
 	

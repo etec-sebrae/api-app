@@ -23,7 +23,8 @@ public class CursoController {
 	
 	@GetMapping
 	public ResponseEntity<?>  listaCursos() {		
-		List<Curso> cursos = service.listarCursos();	
+		List<Curso> cursos = service.listarCursos();
+		System.out.println(cursos.get(1));
 		return ResponseEntity.status(HttpStatus.OK).body(cursos);
 	}
 				

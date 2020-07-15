@@ -2,15 +2,12 @@ package br.gov.etec.app.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -33,11 +30,7 @@ public class Curso {
 	@JsonIgnore
 	@ManyToMany(mappedBy = "cursos", cascade = CascadeType.ALL)
 	private List<Escola> escolas = new ArrayList<>();
-	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "tb_aluno_curso", 
-		joinColumns = {@JoinColumn(referencedColumnName = "id")},
-		inverseJoinColumns = {@JoinColumn(referencedColumnName = "id")})
+	@ManyToMany(mappedBy = "cursos", cascade = CascadeType.ALL)
 	private List<Pessoa> alunos = new ArrayList<>();
 		
 	
@@ -51,7 +44,6 @@ public class Curso {
 		this.descricao = descricao;
 		this.codigo = codigo;
 	}
-		
 	
 	public long getId() {
 		return id;

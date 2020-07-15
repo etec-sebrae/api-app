@@ -11,9 +11,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.gov.etec.app.enuns.TipoEnum;
 
 @Entity
@@ -37,11 +42,14 @@ public class Pessoa {
 	private String email;
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo")
-	private TipoEnum tipo; 
+	private TipoEnum tipo;
+	@JsonIgnore
 	@OneToOne
 	private Usuario usuario;
-	
-	@ManyToMany(mappedBy = "alunos", cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "tb_aluno_curso", 
+		joinColumns = {@JoinColumn(referencedColumnName = "id")},
+		inverseJoinColumns = {@JoinColumn(referencedColumnName = "id")})
 	private List<Curso> cursos = new ArrayList<>();
 	
 	

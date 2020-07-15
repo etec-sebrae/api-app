@@ -32,23 +32,22 @@ public class AlunoService {
 	
 	public Pessoa cadastrar(AlunoDto alunoDto){
 									
-		Pessoa aluno = pessoaAlunoRepository.saveAndFlush(alunoDto.transformaAlunoDto());		
-		Usuario usuario = usuarioService.criarUsuarioAluno(alunoDto.getEmail(),alunoDto.getSenha());		
-		aluno.setUsuario(usuario);
+		Pessoa aluno = alunoDto.transformaAlunoDto();	
 		
-		List<Curso> listaCurso = new ArrayList<>();
-		
-		for(int i = 0; i < alunoDto.getCursos().size();i++) {
-			
+		List<Curso> listaCurso = new ArrayList<>();		
+		for(int i = 0; i < alunoDto.getCursos().size();i++) {			
 			long id = alunoDto.getCursos().get(i).getId();			
 			Curso curso = cursoService.buscarPorId(id);			
-			listaCurso.add(curso);
-			
-		}
-		
+			listaCurso.add(curso);			
+		}		
 		aluno.setCursos(listaCurso);
 		
-		pessoaAlunoRepository.saveAndFlush(aluno);	
+		Pessoa alunoData = pessoaAlunoRepository.save(aluno);
+		
+		Usuario usuario = usuarioService.criarUsuarioAluno(alunoDto.getEmail(),alunoDto.getSenha());		
+		alunoData.setUsuario(usuario);
+			
+		pessoaAlunoRepository.save(aluno);	
 		
 		return aluno;			
 	}

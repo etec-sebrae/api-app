@@ -13,6 +13,8 @@ public class CursoDto {
 	private String descricao;
 	@NotBlank
 	private String codigo;
+	
+	private int status;
 		
 	public CursoDto(){}
 	
@@ -35,6 +37,14 @@ public class CursoDto {
 
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
+	}
+	
+	public int getStatus() {
+		return status;
+	}
+	
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	public Curso transformaCursoDto() {

@@ -35,13 +35,11 @@ public class AlunoDto implements Serializable {
 	private String email;
 	@NotNull
 	private Date data_nasc;
-	@NotNull
-	private long id_curso;
 	@NotBlank
 	private String senha;	
 	private List<Curso> cursos = new ArrayList<>(); 
 	
-	
+
 	public AlunoDto() {}
 	
 
@@ -75,14 +73,6 @@ public class AlunoDto implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public long getId_curso() {
-		return id_curso;
-	}
-
-	public void setId_curso(long id_curso) {
-		this.id_curso = id_curso;
 	}
 	
 	public Date getData_nasc() {
