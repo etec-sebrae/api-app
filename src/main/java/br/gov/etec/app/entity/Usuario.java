@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.gov.etec.app.enuns.PerfilEnum;
 
 @Entity
@@ -20,6 +22,7 @@ public class Usuario {
 	private long id;
 	@Column(name = "email", nullable = false, unique = true, length = 55)
 	private String email;
+	@JsonIgnore
 	@Column(name = "senha", nullable = false, length = 500)
 	private String senha; 
 	@Enumerated(EnumType.STRING)
