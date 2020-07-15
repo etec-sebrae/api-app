@@ -1,8 +1,12 @@
 package br.gov.etec.app.dtos;
 
+import java.util.List;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+
+import br.gov.etec.app.entity.Curso;
 import br.gov.etec.app.entity.Escola;
 
 public class EscolaDto {
@@ -16,6 +20,8 @@ public class EscolaDto {
 	private String codigo;
 	@NotNull
 	private int status;
+	
+	private List<Curso> cursos;
 		
 	
 	public EscolaDto(String nome, String email, String codigo, int status) {
@@ -50,6 +56,14 @@ public class EscolaDto {
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	
+	public List<Curso> getCursos() {
+		return cursos;
+	}
+	
+	public void setCursos(List<Curso> cursos) {
+		this.cursos = cursos;
 	}
 		
 	public Escola transformaEscolaDto() {

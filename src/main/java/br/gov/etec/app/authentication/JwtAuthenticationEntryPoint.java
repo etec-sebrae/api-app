@@ -8,11 +8,11 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 @Component
-public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class JwtAuthenticationEntryPoint  implements AuthenticationEntryPoint {
 	
 	public void commence (HttpServletRequest request, HttpServletResponse response,AuthenticationException authException ) throws IOException {
 		response.sendError(HttpServletResponse.SC_UNAUTHORIZED,
-				"Acesso negado. Você deve estar autenticado no sistema "
-				+ "para acessar a URL solicitada." );
+				"Acesso negado. " + "verifique as credencias de acesso. " );	
 	}
+	
 }

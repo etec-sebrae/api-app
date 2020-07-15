@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import br.gov.etec.app.dtos.SolicitacaoDocumentoDto;
 import br.gov.etec.app.entity.Curso;
 import br.gov.etec.app.entity.Documento;
@@ -34,11 +33,7 @@ public class SolicitacaoDocumentoService {
     }
 				 	
 	
-	public SolicitacaoDocumento cadastrar(SolicitacaoDocumentoDto dto, BindingResult result){
-		if(result.hasErrors()) {
-			return null;
-		}
-		
+	public SolicitacaoDocumento cadastrar(SolicitacaoDocumentoDto dto){	
 		Pessoa aluno = alunoService.buscarPorId(dto.getId_aluno());		
 		Documento documento = documentoService.buscarPorId(dto.getId_documento());		
 		Curso curso = cursoService.buscarPorId(dto.getId_curso());		

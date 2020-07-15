@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.gov.etec.app.dtos.AlunoDto;
-import br.gov.etec.app.entity.AlunoCurso;
 import br.gov.etec.app.entity.Pessoa;
 import br.gov.etec.app.services.AlunoService;
 import io.swagger.annotations.ApiOperation;
@@ -37,7 +36,7 @@ public class AlunoController {
 	@PostMapping()
 	public ResponseEntity<?> cadastrar(@RequestBody @Valid AlunoDto alunoDto) {
 				
-		AlunoCurso aluno =  service.cadastrar(alunoDto);	
+		Pessoa aluno =  service.cadastrar(alunoDto);	
 		return ResponseEntity.status(HttpStatus.OK).body(aluno);
 	}
 	

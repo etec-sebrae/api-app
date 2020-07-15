@@ -3,7 +3,6 @@ package br.gov.etec.app.services;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import br.gov.etec.app.dtos.FuncionarioDto;
 import br.gov.etec.app.entity.Pessoa;
 import br.gov.etec.app.entity.Usuario;
@@ -24,14 +23,14 @@ public class FuncionarioService {
 		return pessoaFuncionario;	
 	}
 	
-	public Pessoa cadastrar(FuncionarioDto funcionarioDto,  BindingResult result){
-		if(result.hasErrors()) {
-			return null;
-		}
-				
-		Pessoa funcionario = pessoaFuncionarioRepository.saveAndFlush(funcionarioDto.tranformaFuncionarioDto());		
-		Usuario usuario = usuarioService.criarUsuarioFuncionario(funcionarioDto.getEmail(),funcionarioDto.getSenha());		
-		funcionario.setUsuario(usuario);		
+	public Pessoa cadastrar(FuncionarioDto funcionarioDto){
+						
+		Pessoa funcionario = pessoaFuncionarioRepository.saveAndFlush(funcionarioDto.tranformaFuncionarioDto());
+		
+		Usuario usuario = usuarioService.criarUsuarioFuncionario(funcionarioDto.getEmail(),funcionarioDto.getSenha());	
+		
+		funcionario.setUsuario(usuario);	
+		
 		pessoaFuncionarioRepository.saveAndFlush(funcionario);
 		
 		return funcionario;

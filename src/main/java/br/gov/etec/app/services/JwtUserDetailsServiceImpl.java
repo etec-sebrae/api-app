@@ -23,7 +23,6 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<Usuario> login = loginRepository.findByEmail(username);
 		loginRepository.flush();
-		System.out.println(login.isPresent());
 		if (!login.isPresent()) {
 			throw new UsernameNotFoundException("Email não encontrado.");
 		}

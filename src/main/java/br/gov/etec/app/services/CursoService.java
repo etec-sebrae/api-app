@@ -3,16 +3,15 @@ package br.gov.etec.app.services;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import br.gov.etec.app.dtos.CursoDto;
 import br.gov.etec.app.entity.Curso;
-import br.gov.etec.app.repository.CursoReposity;
+import br.gov.etec.app.repository.CursoRepository;
 
 @Service
 public class CursoService {
 	
 	@Autowired
-	private CursoReposity repository;
+	private CursoRepository repository;
 	
 	public List<Curso> listarCursos(){		
 		List<Curso> curso = repository.findAll();		
@@ -20,13 +19,10 @@ public class CursoService {
 		return curso;
 	}
 	
-	public Curso cadastrarCurso(CursoDto cursoDto, BindingResult result){
-					
-		if(result.hasErrors()) {							
-			return null;
-		}
+	public Curso cadastrarCurso(CursoDto cursoDto){
 		
-		Curso curso = repository.saveAndFlush(cursoDto.transformaCursoDto());		
+		Curso curso = repository.saveAndFlush(cursoDto.transformaCursoDto());	
+		
 		return curso;
 	}
 	

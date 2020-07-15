@@ -1,11 +1,11 @@
 package br.gov.etec.app.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import br.gov.etec.app.dtos.AlunoDto;
-import br.gov.etec.app.entity.AlunoCurso;
 import br.gov.etec.app.entity.Curso;
 import br.gov.etec.app.entity.Pessoa;
 import br.gov.etec.app.entity.Usuario;
@@ -16,15 +16,13 @@ import br.gov.etec.app.repository.PessoaRepository;
 public class AlunoService {
 	@Autowired
 	private PessoaRepository pessoaAlunoRepository;
-		
-	@Autowired
-	private CursoService cursoService;
-			
+						
 	@Autowired
 	private UsuarioService usuarioService;	
 	
 	@Autowired
-	private AlunoCursoService alunoCursoService;	
+	private CursoService cursoService;
+		
 		
 	public List<Pessoa> listar(Pageable pageable){				
 		List<Pessoa> aluno = pessoaAlunoRepository.findByTipo(TipoEnum.ALUNO);
@@ -32,19 +30,26 @@ public class AlunoService {
 		return aluno;
 	}
 	
-	public AlunoCurso cadastrar(AlunoDto alunoDto){
-			
-							
-		Pessoa aluno = pessoaAlunoRepository.saveAndFlush(alunoDto.transformaAlunoDto());	
-		Usuario usuario = usuarioService.criarUsuarioAluno(alunoDto.getEmail(),alunoDto.getSenha());
+	public Pessoa cadastrar(AlunoDto alunoDto){
+									
+		Pessoa aluno = alunoDto.transformaAlunoDto();	
 		
-		aluno.setUsuario(usuario);
-		pessoaAlunoRepository.saveAndFlush(aluno);
+		List<Curso> listaCurso = new ArrayList<>();		
+		for(int i = 0; i < alunoDto.getCursos().size();i++) {			
+			long id = alunoDto.getCursos().get(i).getId();			
+			Curso curso = cursoService.buscarPorId(id);			
+			listaCurso.add(curso);			
+		}		
+		aluno.setCursos(listaCurso);
 		
+		Pessoa alunoData = pessoaAlunoRepository.save(aluno);
+		
+		Usuario usuario = usuarioService.criarUsuarioAluno(alunoDto.getEmail(),alunoDto.getSenha());		
+		alunoData.setUsuario(usuario);
 			
-		Curso curso = cursoService.buscarPorId(alunoDto.getId_curso());
-		AlunoCurso alunoCurso = alunoCursoService.criar(aluno,curso);					
-		return alunoCurso;			
+		pessoaAlunoRepository.save(aluno);	
+		
+		return aluno;			
 	}
 		
 	public Pessoa buscarPorId(long id){

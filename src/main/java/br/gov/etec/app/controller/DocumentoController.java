@@ -1,12 +1,10 @@
 package br.gov.etec.app.controller;
 
 import java.util.List;
-
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,14 +22,14 @@ public class DocumentoController {
 	private DocumentoService documentoService;
 	
 	@GetMapping
-	public ResponseEntity<List<Documento>>listar(){		
+	public ResponseEntity<?>listar(){		
 		List<Documento> documentos = documentoService.listar();		
 		return ResponseEntity.status(HttpStatus.OK).body(documentos);	
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> cadastar(@RequestBody @Valid DocumentoDto documentoDto, BindingResult result){
-		Documento documento =  documentoService.cadastrar(documentoDto,result);
+	public ResponseEntity<?> cadastar(@RequestBody @Valid DocumentoDto documentoDto){
+		Documento documento =  documentoService.cadastrar(documentoDto);
 		return ResponseEntity.status(HttpStatus.OK).body(documento);
 	}
 	

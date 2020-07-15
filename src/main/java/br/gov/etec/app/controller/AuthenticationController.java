@@ -24,6 +24,7 @@ import br.gov.etec.app.authentication.JwtTokenUtil;
 import br.gov.etec.app.dtos.JwtAuthenticationDto;
 import br.gov.etec.app.dtos.TokenDto;
 import br.gov.etec.app.entity.Pessoa;
+import br.gov.etec.app.enuns.TipoEnum;
 import br.gov.etec.app.repository.PessoaRepository;
 import br.gov.etec.app.response.Response;
 
@@ -59,9 +60,9 @@ public class AuthenticationController {
 	*/
 	
 	@PostMapping()
-	public ResponseEntity<?> gerarTokenJwtOperador(@Valid @RequestBody JwtAuthenticationDto authenticationDto   ) throws AuthenticationException {
+	public ResponseEntity<?> gerarTokenJwtOperador(@Valid @RequestBody JwtAuthenticationDto authenticationDto) throws AuthenticationException {
 			
-		log.info("Gerando Token para o email {}",authenticationDto.getEmail());
+		log.info("Gerando Token para o email {}",authenticationDto.getEmail());	
 		
 		Authentication authentication = authenticationManager.authenticate( 
 				new UsernamePasswordAuthenticationToken(
@@ -69,14 +70,19 @@ public class AuthenticationController {
 				)
 		);
 		
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		
+		SecurityContextHolder.getContext().setAuthentication(authentication);		
 		UserDetails userDetails = userDetailsService.loadUserByUsername(
 				authenticationDto.getEmail()
 		);				
 		
 		String token = jwtTokenUtil.obterToken(userDetails);		
-		Pessoa pessoa = pessoaRepository.findByEmail(authenticationDto.getEmail());		
+		Pessoa pessoa = pessoaRepository.findByEmail(authenticationDto.getEmail());	
+		
+		if(pessoa.getTipo() == TipoEnum.ALUNO) {
+			
+			return ResponseEntity.ok(new TokenDto(token,pessoa));
+		}
+		
 				
 		return ResponseEntity.ok(new TokenDto(token,pessoa));				
 	}
