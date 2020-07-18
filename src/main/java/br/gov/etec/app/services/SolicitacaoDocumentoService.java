@@ -45,8 +45,8 @@ public class SolicitacaoDocumentoService {
 			map.put("data_abertura", solicitacaoDocumento.getData_abertura());
 			map.put("data_conclusao", solicitacaoDocumento.getData_conclusao());
 			map.put("documento", solicitacaoDocumento.getDocumento().getId() );
-			map.put("aluno", solicitacaoDocumento.getAluno().getId());
-			map.put("curso", solicitacaoDocumento.getCurso().getId());			
+			//map.put("aluno", solicitacaoDocumento.getAluno().getId());
+			//map.put("curso", solicitacaoDocumento.getCurso().getId());			
 			hashMap.add(map);
 		}
 					
