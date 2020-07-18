@@ -36,7 +36,9 @@ public class SolicitacaoDocumentoService {
 		
 		List<LinkedHashMap<String, Object>> hashMap = new ArrayList<>();
 		
-		for (SolicitacaoDocumento solicitacaoDocumento : documentos) {
+		List<SolicitacaoDocumento> lista = documentos.getContent();
+		
+		for (SolicitacaoDocumento solicitacaoDocumento : lista) {
 			LinkedHashMap<String, Object> map = new LinkedHashMap<>();			
 			map.put("id", solicitacaoDocumento.getId());
 			map.put("status", solicitacaoDocumento.getStatus());
@@ -45,8 +47,9 @@ public class SolicitacaoDocumentoService {
 			map.put("documento", solicitacaoDocumento.getDocumento().getId() );
 			map.put("aluno", solicitacaoDocumento.getAluno().getId());
 			map.put("curso", solicitacaoDocumento.getCurso().getId());			
-			hashMap.add(map);			
-		}					
+			hashMap.add(map);
+		}
+					
 	    return new PageImpl<>(hashMap);  
     }
 	
