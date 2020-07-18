@@ -66,16 +66,14 @@ public class SolicitacaoDocumentoService {
 		SolicitacaoDocumento solicitacaoData = repositorySolicitacoes.findById(id);	
 		
 		if(solicitacaoData == null) {
-			LinkedHashMap<String, Object> al = new LinkedHashMap<>();
-			al.put("defaultMessage", "Solicitacao não localizado");
 			return null;
 		}		
 		
 		solicitacaoData.setStatus(status);
 				
-		SolicitacaoDocumento _solicitacoes = repositorySolicitacoes.save(solicitacaoData);	
+		return repositorySolicitacoes.save(solicitacaoData);	
 		
-		return _solicitacoes;		
+			
 	}
 	
 

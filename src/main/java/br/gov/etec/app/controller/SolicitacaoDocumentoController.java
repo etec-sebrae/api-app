@@ -32,6 +32,9 @@ public class SolicitacaoDocumentoController {
 	@PostMapping
 	public ResponseEntity<?> cadastro(@RequestBody @Valid SolicitacaoDocumentoDto dto){
 		SolicitacaoDocumento solicatacao = service.cadastrar(dto);
+		if(solicatacao == null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("solicitação não localizada");
+		}
 		return ResponseEntity.status(HttpStatus.OK).body(solicatacao);
 	}
 	

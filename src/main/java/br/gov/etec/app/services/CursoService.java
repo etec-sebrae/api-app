@@ -32,4 +32,38 @@ public class CursoService {
 		return curso;
 	}
 
+	public Curso atualizar(long id, CursoDto dto) {
+		Curso curso = repository.findById(id);
+		
+		if(curso == null) {
+			return null;
+		}
+		
+		if(dto.getDescricao() != "") {
+			curso.setDescricao(dto.getDescricao());
+		};
+		if(dto.getNome() != "") {
+			curso.setNome(dto.getNome());
+		};
+		if(dto.getCodigo() != "") {
+			curso.setCodigo(dto.getCodigo());
+		}
+		if(dto.getStatus() != 0L) {
+			curso.setStatus(dto.getStatus());
+		}
+				
+		return curso;
+	}
+
+	public boolean deleta(long id) {
+		Curso curso = repository.findById(id);
+		if(curso == null ) {
+			return false;
+		}
+		
+		repository.save(curso);
+		
+		return true;
+	}
+
 }
