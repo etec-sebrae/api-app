@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import br.gov.etec.app.entity.Curso;
 import br.gov.etec.app.entity.Pessoa;
 import br.gov.etec.app.enuns.TipoEnum;
@@ -21,7 +20,7 @@ public class AlunoDto implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 6310666307879291066L;
-	
+		
 	@NotBlank
 	private String nome;
 	@NotBlank
@@ -37,11 +36,9 @@ public class AlunoDto implements Serializable {
 	private Date data_nasc;
 	@NotBlank
 	private String senha;	
-	private List<Curso> cursos = new ArrayList<>(); 
-	
+	private List<Curso> cursos = new ArrayList<>(); 	
 
-	public AlunoDto() {}
-	
+	public AlunoDto() {}	
 
 	public String getNome() {
 		return nome;

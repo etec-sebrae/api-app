@@ -28,10 +28,13 @@ public class SolicitacaoDocumentoService {
 	private CursoService cursoService;
 	
 		
-	public Page<SolicitacaoDocumento> listar(Pageable pageable){			
+	public Page<SolicitacaoDocumento> listar(Pageable pageable){
         return repositorySolicitacoes.findAll(pageable);        
     }
-				 	
+	
+	public SolicitacaoDocumento listarPorId(long id){			
+        return repositorySolicitacoes.findById(id);        
+    }				 	
 	
 	public SolicitacaoDocumento cadastrar(SolicitacaoDocumentoDto dto){	
 		Pessoa aluno = alunoService.buscarPorId(dto.getId_aluno());		
@@ -41,17 +44,19 @@ public class SolicitacaoDocumentoService {
 		return solicitacoes;		
 	}
 	
-	public SolicitacaoDocumento atualizar(long id, SolicitacaoDocumentoDto dto){		
-		SolicitacaoDocumento solicitacaoData = repositorySolicitacoes.findById(id);				
+	public SolicitacaoDocumento atualizar(long id, int status){		
+		SolicitacaoDocumento solicitacaoData = repositorySolicitacoes.findById(id);	
+		
 		if(solicitacaoData == null) {
 			LinkedHashMap<String, Object> al = new LinkedHashMap<>();
 			al.put("defaultMessage", "Solicitacao não localizado");
 			return null;
 		}		
-		if(dto.getStatus() != 0L) {
-			solicitacaoData.setStatus((int)dto.getStatus());
-		}		
+		
+		solicitacaoData.setStatus(status);
+				
 		SolicitacaoDocumento _solicitacoes = repositorySolicitacoes.save(solicitacaoData);	
+		
 		return _solicitacoes;		
 	}
 	

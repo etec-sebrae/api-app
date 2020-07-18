@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import br.gov.etec.app.dtos.FuncionarioDto;
 import br.gov.etec.app.entity.Pessoa;
 import br.gov.etec.app.entity.Usuario;
+import br.gov.etec.app.enuns.PerfilEnum;
 import br.gov.etec.app.enuns.TipoEnum;
 import br.gov.etec.app.repository.PessoaRepository;
 
@@ -18,16 +19,23 @@ public class FuncionarioService {
 	UsuarioService usuarioService;
 	
 	public List<Pessoa> listar(){
-		List<Pessoa> pessoaFuncionario = pessoaFuncionarioRepository.findByTipo(TipoEnum.FUNCIONARIO);
+		List<Pessoa> pessoaFuncionario = pessoaFuncionarioRepository.findByTipo(TipoEnum.FUNCIONARIO);		
 		pessoaFuncionarioRepository.flush();		
 		return pessoaFuncionario;	
 	}
 	
 	public Pessoa cadastrar(FuncionarioDto funcionarioDto){
+		PerfilEnum perfil;
+		
+		if(funcionarioDto.getPerfil() == "ADMIN") {
+			perfil = PerfilEnum.ROLE_ADMIN;
+		}else{
+			perfil = PerfilEnum.ROLE_USUARIO;
+		}
 						
 		Pessoa funcionario = pessoaFuncionarioRepository.saveAndFlush(funcionarioDto.tranformaFuncionarioDto());
 		
-		Usuario usuario = usuarioService.criarUsuarioFuncionario(funcionarioDto.getEmail(),funcionarioDto.getSenha());	
+		Usuario usuario = usuarioService.criarUsuarioFuncionario(funcionarioDto.getEmail(),funcionarioDto.getSenha(),perfil);	
 		
 		funcionario.setUsuario(usuario);	
 		

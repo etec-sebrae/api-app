@@ -26,5 +26,35 @@ public class DocumentoService {
 	public Documento buscarPorId(long id){
 		return repository.findById(id);
 	}
+
+	public Documento atualizar(long id, DocumentoDto dto){
+		Documento documento = repository.findById(id);
+		
+		if(documento == null) {
+			return null;
+		}
+		
+		if(dto.getDescricao() != "") {
+			documento.setDescricao(dto.getDescricao());
+		};
+		if(dto.getNome() != "") {
+			documento.setNome(dto.getNome());
+		};
+				
+		return repository.save(documento);
+	}
+
+	public boolean deleta(long id){
+		
+		Documento documento = repository.findById(id);
+		
+		if(documento == null ) {
+			return false;
+		}
+		
+		repository.delete(documento);
+		
+		return true;
+	}
 	
 }

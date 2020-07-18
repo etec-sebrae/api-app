@@ -59,4 +59,13 @@ public class AlunoService {
 	}
 		
 	
+	
+	public void atualizar(long id, AlunoDto alunoDto){
+				
+			
+		pessoaAlunoRepository.save(alunoDto.transformaAlunoDto());
+		
+		
+	}
+	
 }

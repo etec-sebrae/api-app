@@ -63,8 +63,7 @@ public class RestEceptionHandler implements Serializable{
 	@ExceptionHandler(JsonParseException.class)
 	protected ResponseEntity<?> handleJsonParseException(JsonParseException ex) {		
 		LinkedHashMap<String, Object> al = new LinkedHashMap<>();				
-		al.put("defaultMessage",ex.getOriginalMessage());
-						
+		al.put("defaultMessage",ex.getOriginalMessage());						
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(al);
 	}
 	

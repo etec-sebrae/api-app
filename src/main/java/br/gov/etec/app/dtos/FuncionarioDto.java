@@ -33,6 +33,9 @@ public class FuncionarioDto implements Serializable {
 	private Date data_nasc;
 	@NotBlank
 	private String senha;
+	@NotBlank
+	private String perfil;
+	
 	
 	public FuncionarioDto() {
 		// TODO Auto-generated constructor stub
@@ -93,6 +96,14 @@ public class FuncionarioDto implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public String getPerfil() {
+		return perfil;
+	}
+	
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
 	}
 
 	public Pessoa tranformaFuncionarioDto() {

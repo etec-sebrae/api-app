@@ -22,7 +22,7 @@ public class SolicitacaoDocumento {
 	@Column(name = "data_abertura", nullable = false)
 	private Date data_abertura ;
 	@Column(name = "data_conclusao")
-	private Date data_conclusao ;
+	private Date data_conclusao;
 	@ManyToOne
 	private Documento documento;
 	@ManyToOne

@@ -31,11 +31,11 @@ public class UsuarioService {
 		return usuario;		
 	}
 	
-	public Usuario criarUsuarioFuncionario(String email, String senha) {
+	public Usuario criarUsuarioFuncionario(String email, String senha, PerfilEnum perfil) {
 		
 		String senhaEncoder = senhaUtils.gerarBCrypt(senha);
 		
-		Usuario entity = new Usuario(email,senhaEncoder,PerfilEnum.ROLE_ADMIN);
+		Usuario entity = new Usuario(email,senhaEncoder,perfil);
 				
 		Usuario usuario = repository.save(entity);
 		

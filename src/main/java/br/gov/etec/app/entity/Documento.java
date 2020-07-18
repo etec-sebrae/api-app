@@ -25,9 +25,9 @@ public class Documento {
 	}
 	
 
-	public Documento(String tipo, String descricao) {
+	public Documento(String nome, String descricao) {
 		super();
-		this.nome = tipo;
+		this.nome = nome;
 		this.descricao = descricao;
 	}
 

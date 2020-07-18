@@ -39,8 +39,8 @@ public class SolicitacaoDocumentoController {
 	
 	@ApiOperation(value = "Atualiza os dados de uma solicitacao por paramentro o ID, e no corpo os dados a serem atualizados ")
 	@PutMapping("/{id}")
-	public ResponseEntity<?> atualizar(@PathVariable("id") long id, @RequestBody  SolicitacaoDocumentoDto SolicitacoesDto){
-		SolicitacaoDocumento documento = service.atualizar(id,SolicitacoesDto);
+	public ResponseEntity<?> atualizar(@PathVariable("id") long id, @RequestBody  int status){
+		SolicitacaoDocumento documento = service.atualizar(id,status);
 		return ResponseEntity.status(HttpStatus.OK).body(documento);
 	}
 
