@@ -2,7 +2,6 @@ package br.gov.etec.app.controller;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +26,7 @@ public class SolicitacaoDocumentoController {
 	
 	@GetMapping
 	public ResponseEntity<?> listar(Pageable pageable){	
-		Page<SolicitacaoDocumento> documentos = service.listar(pageable);
-		return ResponseEntity.status(HttpStatus.OK).body(documentos);		
+		return ResponseEntity.status(HttpStatus.OK).body(service.listar(pageable));		
 	}
 	
 	@PostMapping

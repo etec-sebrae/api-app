@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.gov.etec.app.dtos.DocumentoDto;
 import br.gov.etec.app.entity.Documento;
 import br.gov.etec.app.services.DocumentoService;
-import lombok.Delegate;
 
 @RestController
 @RequestMapping(value = "/api/documentos")
