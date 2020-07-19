@@ -30,25 +30,9 @@ public class SolicitacaoDocumentoService {
 	@Autowired
 	private CursoService cursoService;
 			
-	public Page<LinkedHashMap<String, Object>> listar(Pageable pageable){		
-		
-		Page<SolicitacaoDocumento> documentos = repositorySolicitacoes.findAll(pageable);	
-		
-		List<LinkedHashMap<String, Object>> hashMap = new ArrayList<>();
-		
-		for (SolicitacaoDocumento solicitacaoDocumento : documentos) {
-			LinkedHashMap<String, Object> map = new LinkedHashMap<>();			
-			map.put("id", solicitacaoDocumento.getId());
-			map.put("status", solicitacaoDocumento.getStatus());
-			map.put("data_abertura", solicitacaoDocumento.getData_abertura());
-			map.put("data_conclusao", solicitacaoDocumento.getData_conclusao());
-			map.put("documento", solicitacaoDocumento.getDocumento().getId() );
-			map.put("aluno", solicitacaoDocumento.getAluno().getId());
-			map.put("curso", solicitacaoDocumento.getCurso().getId());			
-			hashMap.add(map);			
-		}					
-	    return new PageImpl<>(hashMap);  
-    }
+	public Page<SolicitacaoDocumento> listar(Pageable pageable){
+		return repositorySolicitacoes.findAll(pageable);     
+	}
 	
 	public SolicitacaoDocumento listarPorId(long id){			
         return repositorySolicitacoes.findById(id);        
