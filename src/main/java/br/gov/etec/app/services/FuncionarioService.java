@@ -34,12 +34,14 @@ public class FuncionarioService {
 		}
 						
 		Pessoa funcionario = pessoaFuncionarioRepository.saveAndFlush(funcionarioDto.tranformaFuncionarioDto());
+		pessoaFuncionarioRepository.flush();
 		
 		Usuario usuario = usuarioService.criarUsuarioFuncionario(funcionarioDto.getEmail(),funcionarioDto.getSenha(),perfil);	
 		
 		funcionario.setUsuario(usuario);	
 		
 		pessoaFuncionarioRepository.saveAndFlush(funcionario);
+		pessoaFuncionarioRepository.flush();
 		
 		return funcionario;
 	}

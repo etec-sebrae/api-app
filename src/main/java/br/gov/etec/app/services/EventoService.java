@@ -14,14 +14,17 @@ public class EventoService {
 	@Autowired
 	private EventoRepository repository;
 	
-	public Page<Evento> consultar(Pageable pageable) {		
-		return repository.findAll(pageable);	
+	public Page<Evento> consultar(Pageable pageable) {	
+		Page<Evento> eventos = repository.findAll(pageable);
+		repository.flush();
+		return eventos ;	
 	}
 	
 	
 	public Evento cadastrar(EventoDto dto) {
 				
-		Evento evento = repository.saveAndFlush(dto.tranformaEventoDto());		
+		Evento evento = repository.saveAndFlush(dto.tranformaEventoDto());	
+		repository.flush();
 		return evento;
 	}
 	

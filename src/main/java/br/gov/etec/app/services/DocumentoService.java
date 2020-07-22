@@ -14,7 +14,7 @@ public class DocumentoService {
 	
 	public List<Documento> listar() {		
 		List<Documento> documentos =  repository.findAll();		
-		repository.findAll();
+		repository.flush();
 		return documentos;			
 	}
 		
@@ -24,11 +24,14 @@ public class DocumentoService {
 	}
 		
 	public Documento buscarPorId(long id){
-		return repository.findById(id);
+		Documento documento = repository.findById(id);
+		repository.flush();
+		return documento;
 	}
 
 	public Documento atualizar(long id, DocumentoDto dto){
 		Documento documento = repository.findById(id);
+		repository.flush();
 		
 		if(documento == null) {
 			return null;
@@ -40,19 +43,24 @@ public class DocumentoService {
 		if(dto.getNome() != "") {
 			documento.setNome(dto.getNome());
 		};
-				
-		return repository.save(documento);
+		
+		Documento _documento = repository.save(documento);
+		repository.flush();
+		
+		return _documento;
 	}
 
 	public boolean deleta(long id){
 		
 		Documento documento = repository.findById(id);
+		repository.flush();
 		
 		if(documento == null ) {
 			return false;
 		}
 		
 		repository.delete(documento);
+		repository.flush();
 		
 		return true;
 	}

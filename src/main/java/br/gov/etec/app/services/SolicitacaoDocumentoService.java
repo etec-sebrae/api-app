@@ -29,12 +29,14 @@ public class SolicitacaoDocumentoService {
 			
 	public Page<SolicitacaoDocumento> listar(Pageable pageable){				
 		Page<SolicitacaoDocumento> documentos = repositorySolicitacoes.findAll(pageable);
-							
+		repositorySolicitacoes.flush();					
 	    return documentos;  
     }
 	
-	public SolicitacaoDocumento listarPorId(long id){			
-        return repositorySolicitacoes.findById(id);        
+	public SolicitacaoDocumento listarPorId(long id){
+		SolicitacaoDocumento solicitacao = repositorySolicitacoes.findById(id);
+		repositorySolicitacoes.flush();
+        return solicitacao;   
     }				 	
 	
 	public SolicitacaoDocumento cadastrar(SolicitacaoDocumentoDto dto){	
@@ -42,26 +44,32 @@ public class SolicitacaoDocumentoService {
 		Documento documento = documentoService.buscarPorId(dto.getId_documento());		
 		Curso curso = cursoService.buscarPorId(dto.getId_curso());		
 		SolicitacaoDocumento solicitacoes = repositorySolicitacoes.save(dto.transformaSolicitacoesDto(documento, aluno,curso));		
+		repositorySolicitacoes.flush();
 		return solicitacoes;		
 	}
 	
 	public SolicitacaoDocumento atualizar(long id, int status){		
 		SolicitacaoDocumento solicitacaoData = repositorySolicitacoes.findById(id);	
-		
+		repositorySolicitacoes.flush();
 		if(solicitacaoData == null) {
 			return null;
 		}		
 		
 		solicitacaoData.setStatus(status);
-				
-		return repositorySolicitacoes.save(solicitacaoData);	
 		
+		SolicitacaoDocumento _solicitacaoData = repositorySolicitacoes.save(solicitacaoData);
+		repositorySolicitacoes.flush();
+		
+				
+		return _solicitacaoData;
+	
 			
 	}
 
 	public List<SolicitacaoDocumento> getForAluno(long id) {
-		Pessoa aluno = alunoService.buscarPorId(id);		
-		return repositorySolicitacoes.findByAluno(aluno);
+		Pessoa aluno = alunoService.buscarPorId(id);	
+		List<SolicitacaoDocumento> solicitacoes = repositorySolicitacoes.findByAluno(aluno);
+		return solicitacoes;
 	}
 	
 

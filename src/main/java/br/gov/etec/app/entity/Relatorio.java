@@ -16,7 +16,7 @@ import org.springframework.data.domain.Page;
 public class Relatorio {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_relatorio", nullable = false, length = 1 )
 	private long idRelatorio;
 	@Lob

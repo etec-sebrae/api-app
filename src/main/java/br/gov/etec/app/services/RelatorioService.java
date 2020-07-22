@@ -23,18 +23,22 @@ public class RelatorioService {
 	
 	
 	public Page<Relatorio> listar(Pageable pageable){	
-        return repositoryRelatorio.findAll(pageable);        
+		Page<Relatorio> relatorios = repositoryRelatorio.findAll(pageable); 
+		repositoryRelatorio.flush();
+        return relatorios;
     }
 	
 
 	public Relatorio cadastrar(RelatorioDto dto){
 		Pessoa aluno = alunoService.buscarPorId(dto.getId_aluno());	
-		Relatorio relatorio = repositoryRelatorio.save(dto.transformaRelatorioDto(aluno));		
+		Relatorio relatorio = repositoryRelatorio.save(dto.transformaRelatorioDto(aluno));	
+		repositoryRelatorio.flush();
 		return relatorio;		
 	}
 	
 	public Relatorio atualizar(long id_relatorio, RelatorioDto dto){		
-		Relatorio RelatorioStatus = repositoryRelatorio.findByIdRelatorio(id_relatorio);				
+		Relatorio RelatorioStatus = repositoryRelatorio.findByIdRelatorio(id_relatorio);
+		repositoryRelatorio.flush();
 		if(RelatorioStatus == null) {
 			LinkedHashMap<String, Object> al = new LinkedHashMap<>();
 			al.put("defaultMessage", "Relatorio não localizado");
@@ -44,11 +48,14 @@ public class RelatorioService {
 			RelatorioStatus.setStatus((int)dto.getStatus());
 		}		
 		Relatorio _status = repositoryRelatorio.save(RelatorioStatus);	
+		repositoryRelatorio.flush();
 		return _status;		
 	}
 	
 	public List<Relatorio> buscarPorId(long id){
-		return repositoryRelatorio.findById(id);
+		List<Relatorio> relatorios = repositoryRelatorio.findById(id);
+		repositoryRelatorio.flush();
+		return relatorios;
 	}
 	
 	

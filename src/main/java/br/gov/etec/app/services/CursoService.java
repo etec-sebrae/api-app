@@ -34,6 +34,7 @@ public class CursoService {
 
 	public Curso atualizar(long id, CursoDto dto) {
 		Curso curso = repository.findById(id);
+		repository.flush();
 		
 		if(curso == null) {
 			return null;
@@ -57,11 +58,13 @@ public class CursoService {
 
 	public boolean deleta(long id) {
 		Curso curso = repository.findById(id);
+		repository.flush();
 		if(curso == null ) {
 			return false;
 		}
 		
 		repository.save(curso);
+		repository.flush();
 		
 		return true;
 	}

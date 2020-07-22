@@ -22,7 +22,9 @@ public class EscolaService {
 	private CursoService cursoService;
 		
 	public Page<Escola> listar(Pageable pageable){
-		return escolaRepository.findAll(pageable);
+		Page<Escola> escola = escolaRepository.findAll(pageable);
+		escolaRepository.flush();
+		return escola;
 	}
 		
 	public Escola cadastro(EscolaDto escolaDto) {
@@ -44,6 +46,7 @@ public class EscolaService {
 		}
 						
 		Escola escolaData = escolaRepository.save(escola);	
+		escolaRepository.flush();
 		
 		return escolaData;
 	}

@@ -23,7 +23,7 @@ import br.gov.etec.app.enuns.TipoEnum;
 public class Pessoa {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO )
+	@GeneratedValue(strategy = GenerationType.IDENTITY )
 	private long id;
 	@Column(name = "nome", nullable = false,length = 50)
 	private String nome;

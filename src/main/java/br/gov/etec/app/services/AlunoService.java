@@ -43,11 +43,13 @@ public class AlunoService {
 		aluno.setCursos(listaCurso);
 		
 		Pessoa alunoData = pessoaAlunoRepository.save(aluno);
+		pessoaAlunoRepository.flush();
 		
 		Usuario usuario = usuarioService.criarUsuarioAluno(alunoDto.getEmail(),alunoDto.getSenha());		
 		alunoData.setUsuario(usuario);
 			
 		pessoaAlunoRepository.save(aluno);	
+		pessoaAlunoRepository.flush();
 		
 		return aluno;			
 	}
@@ -62,6 +64,7 @@ public class AlunoService {
 	
 	public Pessoa atualizar(long id, AlunoDto dto){
 		Pessoa aluno = pessoaAlunoRepository.findById(id);
+		pessoaAlunoRepository.flush();
 		
 		if(dto.getCpf() != "") {
 			if (aluno.getCpf() != dto.getCpf()) {
