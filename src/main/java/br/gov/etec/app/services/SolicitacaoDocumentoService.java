@@ -78,6 +78,11 @@ public class SolicitacaoDocumentoService {
 		
 			
 	}
+
+	public List<SolicitacaoDocumento> getForAluno(long id) {
+		Pessoa aluno = alunoService.buscarPorId(id);		
+		return repositorySolicitacoes.findByAluno(aluno);
+	}
 	
 
 }

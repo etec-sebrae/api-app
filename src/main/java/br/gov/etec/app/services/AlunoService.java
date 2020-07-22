@@ -63,31 +63,42 @@ public class AlunoService {
 	public Pessoa atualizar(long id, AlunoDto dto){
 		Pessoa aluno = pessoaAlunoRepository.findById(id);
 		
-		if (aluno.getCpf() != dto.getCpf()) {
-			aluno.setCpf(dto.getCpf());
+		if(dto.getCpf() != "") {
+			if (aluno.getCpf() != dto.getCpf()) {
+				aluno.setCpf(dto.getCpf());
+			}
 		}
 		
-		if (aluno.getData_nasc() != dto.getData_nasc()) {
-			aluno.setData_nasc(dto.getData_nasc());
+		if(dto.getData_nasc() != null) {
+			if (aluno.getData_nasc() != dto.getData_nasc()) {
+				aluno.setData_nasc(dto.getData_nasc());
+			}
 		}
 		
-		if(aluno.getUsuario().getEmail() != dto.getEmail()) {
-			aluno.setEmail(dto.getEmail());
-			aluno.getUsuario().setEmail(dto.getEmail());
+		if(dto.getEmail() != "") {
+			if(aluno.getUsuario().getEmail() != dto.getEmail()) {
+				aluno.setEmail(dto.getEmail());
+				aluno.getUsuario().setEmail(dto.getEmail());
+			}
+		}
+	
+		if(dto.getMatricula() != 0L) {
+			if(aluno.getMatricula() != dto.getMatricula()) {
+				aluno.setMatricula(dto.getMatricula());
+			}
 		}
 		
-		if(aluno.getMatricula() != dto.getMatricula()) {
-			aluno.setMatricula(dto.getMatricula());
+		if(dto.getNome() != "") {
+			if(aluno.getNome() != dto.getNome()) {
+				aluno.setNome(dto.getNome());
+			}
 		}
 		
-		if(aluno.getNome() != dto.getNome()) {
-			aluno.setNome(dto.getNome());
+		if(dto.getRg() != "") {
+			if(aluno.getRg() != dto.getRg()) {
+				aluno.setRg(dto.getRg());
+			}
 		}
-			
-		if(aluno.getRg() != dto.getRg()) {
-			aluno.setRg(dto.getRg());
-		}
-		
 		
 		Pessoa _aluno = pessoaAlunoRepository.save(aluno);
 		pessoaAlunoRepository.flush();
