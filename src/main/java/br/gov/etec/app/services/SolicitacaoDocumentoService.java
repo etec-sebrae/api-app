@@ -1,11 +1,8 @@
 package br.gov.etec.app.services;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import br.gov.etec.app.dtos.SolicitacaoDocumentoDto;
@@ -30,27 +27,10 @@ public class SolicitacaoDocumentoService {
 	@Autowired
 	private CursoService cursoService;
 			
-	public Page<LinkedHashMap<String, Object>> listar(Pageable pageable){		
-		
-		Page<SolicitacaoDocumento> documentos = repositorySolicitacoes.findAll(pageable);	
-		
-		List<LinkedHashMap<String, Object>> hashMap = new ArrayList<>();
-		
-		List<SolicitacaoDocumento> lista = documentos.getContent();
-		
-		for (SolicitacaoDocumento solicitacaoDocumento : lista) {
-			LinkedHashMap<String, Object> map = new LinkedHashMap<>();			
-			map.put("id", solicitacaoDocumento.getId());
-			map.put("status", solicitacaoDocumento.getStatus());
-			map.put("data_abertura", solicitacaoDocumento.getData_abertura());
-			map.put("data_conclusao", solicitacaoDocumento.getData_conclusao());
-			map.put("documento", solicitacaoDocumento.getDocumento().getId() );
-			map.put("aluno", solicitacaoDocumento.getAluno().getId());
-			map.put("curso", solicitacaoDocumento.getCurso().getId());			
-			hashMap.add(map);
-		}
-					
-	    return new PageImpl<>(hashMap);  
+	public Page<SolicitacaoDocumento> listar(Pageable pageable){				
+		Page<SolicitacaoDocumento> documentos = repositorySolicitacoes.findAll(pageable);
+							
+	    return documentos;  
     }
 	
 	public SolicitacaoDocumento listarPorId(long id){			
