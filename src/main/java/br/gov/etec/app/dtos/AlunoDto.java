@@ -34,7 +34,6 @@ public class AlunoDto implements Serializable {
 	private String email;
 	@NotNull
 	private Date data_nasc;
-	@NotBlank
 	private String senha;	
 	private List<Curso> cursos = new ArrayList<>(); 	
 

@@ -18,17 +18,18 @@ public class Documento {
 	private String nome;
 	@Column(name = "descricao", nullable = false, length = 100)
 	private String descricao;
-	
+	private int status;
 	
 	public Documento() {
 		
 	}
 	
 
-	public Documento(String nome, String descricao) {
+	public Documento(String nome, String descricao,int status) {
 		super();
 		this.nome = nome;
 		this.descricao = descricao;
+		this.status = status;
 	}
 
 	public long getId() {
@@ -53,6 +54,14 @@ public class Documento {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+	
+	public int getStatus() {
+		return status;
+	}
+	
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	
 	

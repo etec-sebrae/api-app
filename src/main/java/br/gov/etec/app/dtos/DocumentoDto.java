@@ -14,6 +14,7 @@ public class DocumentoDto {
 	private String nome;
 	@NotBlank
 	private String descricao;
+	private int status;
 		
 	
 	public DocumentoDto() {
@@ -41,8 +42,16 @@ public class DocumentoDto {
 		this.descricao = descricao;
 	}
 	
+	public int getStatus() {
+		return status;
+	}
+	
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
 	public Documento tranformarDocumentoDto() {
-		return new Documento(nome,descricao);
+		return new Documento(nome,descricao,status);
 	}
 
 }

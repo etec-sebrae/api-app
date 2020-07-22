@@ -17,12 +17,12 @@ import br.gov.etec.app.entity.Usuario;
 public class JwtUserDetailsServiceImpl implements UserDetailsService{
 		
 	@Autowired
-	UsuarioRepository loginRepository;
+	UsuarioRepository usuarioRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<Usuario> login = loginRepository.findByEmail(username);
-		loginRepository.flush();
+		Optional<Usuario> login = usuarioRepository.findByEmail(username);
+		usuarioRepository.flush();
 		if (!login.isPresent()) {
 			throw new UsernameNotFoundException("Email não encontrado.");
 		}

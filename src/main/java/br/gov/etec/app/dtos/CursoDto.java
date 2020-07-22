@@ -12,9 +12,9 @@ public class CursoDto {
 	@NotBlank
 	private String descricao;
 	@NotBlank
-	private String codigo;
+	private String codigo ;
 	
-	private int status;
+	private int status = 1;
 		
 	public CursoDto(){}
 	
@@ -48,7 +48,7 @@ public class CursoDto {
 	}
 
 	public Curso transformaCursoDto() {
-		return new Curso(nome,descricao,codigo);
+		return new Curso(nome,descricao,codigo,status);
 	}
 
 }

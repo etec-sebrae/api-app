@@ -48,9 +48,9 @@ public class AlunoController {
 	}
 		
 	@PutMapping("/{id}")
-	public void atualizar(@PathVariable long id,@RequestBody @Valid AlunoDto alunoDto){		
-		service.atualizar(id,alunoDto);		
-		//return ResponseEntity.status(HttpStatus.OK).body(aluno);
+	public ResponseEntity<?> atualizar(@PathVariable long id,@RequestBody @Valid AlunoDto alunoDto){		
+		Pessoa aluno = service.atualizar(id,alunoDto);		
+		return ResponseEntity.status(HttpStatus.OK).body(aluno);
 	}
 	
 	

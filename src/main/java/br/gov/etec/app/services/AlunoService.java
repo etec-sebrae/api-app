@@ -60,10 +60,39 @@ public class AlunoService {
 		
 	
 	
-	public void atualizar(long id, AlunoDto alunoDto){
-				
+	public Pessoa atualizar(long id, AlunoDto dto){
+		Pessoa aluno = pessoaAlunoRepository.findById(id);
+		
+		if (aluno.getCpf() != dto.getCpf()) {
+			aluno.setCpf(dto.getCpf());
+		}
+		
+		if (aluno.getData_nasc() != dto.getData_nasc()) {
+			aluno.setData_nasc(dto.getData_nasc());
+		}
+		
+		if(aluno.getUsuario().getEmail() != dto.getEmail()) {
+			aluno.setEmail(dto.getEmail());
+			aluno.getUsuario().setEmail(dto.getEmail());
+		}
+		
+		if(aluno.getMatricula() != dto.getMatricula()) {
+			aluno.setMatricula(dto.getMatricula());
+		}
+		
+		if(aluno.getNome() != dto.getNome()) {
+			aluno.setNome(dto.getNome());
+		}
 			
-		pessoaAlunoRepository.save(alunoDto.transformaAlunoDto());
+		if(aluno.getRg() != dto.getRg()) {
+			aluno.setRg(dto.getRg());
+		}
+		
+		
+		Pessoa _aluno = pessoaAlunoRepository.save(aluno);
+		pessoaAlunoRepository.flush();
+		
+		return _aluno;
 		
 		
 	}

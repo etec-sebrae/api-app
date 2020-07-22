@@ -39,7 +39,7 @@ public class CursoController {
 	
 	
 	@PutMapping("{id}")
-	public ResponseEntity<?> atualizar(@PathVariable long id, CursoDto dto){
+	public ResponseEntity<?> atualizar(@PathVariable long id, @RequestBody CursoDto dto){
 		Curso curso = service.atualizar(id,dto);
 		
 		if(curso == null) {

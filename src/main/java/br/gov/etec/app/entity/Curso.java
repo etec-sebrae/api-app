@@ -38,11 +38,12 @@ public class Curso {
 		
 	}
 
-	public Curso(String nome, String descricao, String codigo) {
+	public Curso(String nome, String descricao, String codigo, int status) {
 		super();
 		this.nome = nome;
 		this.descricao = descricao;
 		this.codigo = codigo;
+		this.status = status;
 	}
 	
 	public long getId() {

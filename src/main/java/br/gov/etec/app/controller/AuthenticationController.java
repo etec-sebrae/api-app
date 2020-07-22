@@ -24,7 +24,6 @@ import br.gov.etec.app.authentication.JwtTokenUtil;
 import br.gov.etec.app.dtos.JwtAuthenticationDto;
 import br.gov.etec.app.dtos.TokenDto;
 import br.gov.etec.app.entity.Pessoa;
-import br.gov.etec.app.enuns.TipoEnum;
 import br.gov.etec.app.repository.PessoaRepository;
 import br.gov.etec.app.response.Response;
 
@@ -75,15 +74,10 @@ public class AuthenticationController {
 				authenticationDto.getEmail()
 		);				
 		
-		String token = jwtTokenUtil.obterToken(userDetails);		
+		String token = jwtTokenUtil.obterToken(userDetails);
+		
 		Pessoa pessoa = pessoaRepository.findByEmail(authenticationDto.getEmail());	
-		
-		if(pessoa.getTipo() == TipoEnum.ALUNO) {
-			
-			return ResponseEntity.ok(new TokenDto(token,pessoa));
-		}
-		
-				
+						
 		return ResponseEntity.ok(new TokenDto(token,pessoa));				
 	}
 	
